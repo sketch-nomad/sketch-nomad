@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://sketchnomad.com/sitemap-index.xml
+
+# Main pages
+Allow: /plein-air-hub
+Allow: /roadmap  
+Allow: /changelog
+Allow: /plein-air-painting-app
+Allow: /blog
+
+# Disallow admin and development paths
+Disallow: /admin/
+Disallow: /*.json$
+Disallow: /api/

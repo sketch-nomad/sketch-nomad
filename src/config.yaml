@@ -1,0 +1,71 @@
+site:
+  name: Sketch Nomad
+  site: 'https://sketchnomad.com'
+  base: '/'
+  trailingSlash: false
+
+  googleSiteVerificationId: G4a_7zqGSvsklpVeSe95HzT1TW4V498Ost4ln_tDUFk
+
+# Default SEO metadata
+metadata:
+  title:
+    default: Sketch Nomad – Community for Plein Air Sketchers & Artists
+    template: '%s — Sketch Nomad | Plein Air Sketchers Community'
+  description: "Sketch Nomad is the platform for plein air sketchers and outdoor artists to share location-tagged artwork, discover scenic spots, and connect with fellow en plein air painters worldwide."
+  robots:
+    index: true
+    follow: true
+  openGraph:
+    site_name: Sketch Nomad – Plein Air Sketchers Community
+    images: 
+      - url: '~/assets/images/default.png'
+        width: 1200
+        height: 628
+    type: website
+  instagram:
+    handle: '@maninesan'
+    site: '@maninesan'
+    cardType: summary_large_image
+
+i18n:
+  language: en
+  textDirection: ltr
+
+apps:
+  blog:
+    isEnabled: true
+    postsPerPage: 6
+
+    post:
+      isEnabled: true
+      permalink: '/%slug%' # Variables: %slug%, %year%, %month%, %day%, %hour%, %minute%, %second%, %category%
+      robots:
+        index: true
+
+    list:
+      isEnabled: true
+      pathname: 'blog' # Blog main path, you can change this to "articles" (/articles)
+      robots:
+        index: true
+
+    category:
+      isEnabled: true
+      pathname: 'category' # Category main path /category/some-category, you can change this to "group" (/group/some-category)
+      robots:
+        index: true
+
+    tag:
+      isEnabled: true
+      pathname: 'tag' # Tag main path /tag/some-tag, you can change this to "topics" (/topics/some-category)
+      robots:
+        index: false
+
+    isRelatedPostsEnabled: true
+    relatedPostsCount: 4
+
+analytics:
+  vendors:
+    googleAnalytics:
+      id: G-GTT0NGWRGQ
+ui:
+  theme: 'system' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"

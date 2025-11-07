@@ -1,0 +1,162 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+
+const metadata = {
+  title: 'A Mobile Companion for the Outdoor Artist | Sketch Nomad App',
+  description: 'Discover the Sketch Nomad app, a simple, thoughtful tool for plein air painters. Keep a visual diary of your locations, make notes in the field, and connect with a quiet community of fellow artists.',
+  keywords: 'plein air painting app, outdoor sketching app, en plein air app, mobile app for artists, outdoor painting platform, plein air mobile app, sketching app, outdoor art app',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero -->
+  <Hero
+    tagline="The Sketch Nomad App"
+  >
+    <Fragment slot="title">
+      Your Art, Your Journey,<br />
+      <span class="text-accent dark:text-white highlight">In Your Pocket</span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <span class="hidden sm:inline">
+        A simple companion for your plein air adventures. Document your locations, track conditions, and connect with a quiet community, all from the device you already carry.
+      </span>
+      <div class="text-gray-500 dark:text-gray-400 text-sm p-1 mt-3">Coming Soon to iOS & Android</div>
+    </Fragment>
+  </Hero>
+
+  <!-- App Features -->
+  <Features
+    id="app-features"
+    tagline="App Features"
+    title="A Simple Toolkit for the Field"
+    subtitle="We're building features that serve your art, not distract from it. Here are a few things we're working on."
+    items={[
+      {
+        title: 'Your Personal Art Map',
+        description: 'Keep a private, visual diary of your painting spots using GPS. Revisit your favorite locations and see your artistic journey unfold on a map.',
+        icon: 'tabler:location',
+      },
+      {
+        title: 'Field Notes on the Go',
+        description: 'Jot down notes about the weather, the light, or your color palette right in the app. A simple way to remember the details of each session.',
+        icon: 'tabler:cloud-storm',
+      },
+      {
+        title: 'Ready for Remote Spots',
+        description: 'Key features work offline, so you can document your work even when you\'re far from a signal. Your notes will sync when you\'re back online.',
+        icon: 'tabler:wifi-off',
+      },
+      {
+        title: 'A Community at Your Fingertips',
+        description: 'Gently connect with other artists, share your work when you feel ready, and discover how others see the world.',
+        icon: 'tabler:users',
+      },
+      {
+        title: 'Visual Diary',
+        description: 'Use your camera to capture reference photos or document your process without leaving the app.',
+        icon: 'tabler:camera',
+      },
+      {
+        title: 'Gentle Suggestions',
+        description: 'If you\'re looking for inspiration, the app can offer quiet suggestions for new places to paint, based on spots loved by the community.',
+        icon: 'tabler:bulb',
+      },
+    ]}
+  />
+
+  <!-- Design Philosophy -->
+  <Content
+    isReversed
+    tagline="Our Philosophy"
+    title="A Quiet Companion for Your Practice"
+    items={[
+      {
+        title: 'Unobtrusive Design',
+        description: 'The app is designed to be simple and easy to use, even in bright sunlight, so you can focus on your painting.',
+      },
+      {
+        title: 'Always Ready',
+        description: 'Because it\'s on your phone, it\'s always with you for those spontaneous moments of inspiration.',
+      },
+      {
+        title: 'Mindful of Your Battery',
+        description: 'Built to be efficient, so it won\'t drain your battery during a long day of painting.',
+      },
+      {
+        title: 'A Private Space',
+        description: 'Your notes, locations, and reflections are private by default. Sharing with the community is always your choice.',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      alt: 'A mobile phone resting on a sketchbook, symbolizing a tool that supports, rather than replaces, the traditional creative process.'
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        Built for the Real World
+      </h3>
+      We understand the realities of painting outdoors—from gloved hands and bright sun to the simple desire to stay in the creative moment.
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-purple-50 dark:bg-slate-800"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Helper Features -->
+  <Features2
+    title="Thoughtful Little Helpers"
+    subtitle="A few extra tools designed to assist your observation and planning, without getting in the way."
+    tagline="Helpful Tools"
+    items={[
+      {
+        title: 'Sun & Shadow Tracker',
+        description: 'A simple tool to help you anticipate how light and shadows will change throughout your session.',
+        icon: 'tabler:sun',
+      },
+      {
+        title: 'A Quiet Viewfinder',
+        description: 'Use your camera with simple guides to help you frame a composition and find a focal point.',
+        icon: 'tabler:target',
+      },
+      {
+        title: 'Palette Notes',
+        description: 'Quickly note the colors you\'re using for a piece, helping you remember your choices for future sessions.',
+        icon: 'tabler:palette',
+      },
+      {
+        title: 'Process Photos',
+        description: 'Easily snap photos at different stages of your painting to document your progress and technique.',
+        icon: 'tabler:player-record',
+      },
+    ]}
+  />
+
+  <!-- Call to Action -->
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Join the Waitlist',
+        href: '/',
+        icon: 'tabler:mail',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Help Us Shape the App
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      We're building Sketch Nomad for the community. Join the waitlist to be notified when it's ready and to share your thoughts on what would make a truly helpful tool for outdoor artists.
+    </Fragment>
+  </CallToAction>
+</Layout>

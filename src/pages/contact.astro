@@ -1,0 +1,395 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Button from '~/components/ui/Button.astro';
+
+const metadata = {
+  title: 'Contact Us',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  <HeroText
+    tagline="Contact"
+    title="Get in Touch"
+    subtitle="We'd love to hear from you. Send us a message and we'll respond as soon as possible."
+  />
+  
+  <section class="px-6 pb-8 md:pb-12 lg:pb-16 mx-auto max-w-5xl">
+      <div class="grid lg:grid-cols-3 gap-8 md:gap-12">
+        <!-- Contact Form -->
+        <div class="lg:col-span-2">
+          <!-- Status Messages -->
+          <div id="form-status" class="hidden mb-6"></div>
+          
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Send us a message</h2>
+          
+            <form 
+              class="space-y-5"
+              id="contact-form"
+            >
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Full Name *
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
+                placeholder="Your full name"
+              />
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Email Address *
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
+                placeholder="your.email@example.com"
+              />
+            </div>
+
+            <div>
+              <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Subject
+              </label>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors"
+                placeholder="What's this about?"
+              />
+            </div>
+
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Message *
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                required
+                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-vertical transition-colors"
+                placeholder="Tell us more about your inquiry..."
+              ></textarea>
+            </div>
+
+            <Button
+              type="submit"
+              variant="primary"
+              class="w-full"
+              id="submit-btn"
+            >
+              <span id="submit-text">Send Message</span>
+              <span id="submit-loading" class="hidden">Sending...</span>
+            </Button>
+          </form>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="lg:col-span-1">
+          <div class="bg-gradient-to-br from-primary-50 to-primary-100 dark:from-gray-800 dark:to-gray-700 rounded-xl p-6 md:p-8 h-fit">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+              Other Ways to Reach Us
+            </h3>
+            
+            <div class="space-y-6">
+              <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                  <svg class="w-5 h-5 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-medium text-gray-900 dark:text-white text-sm">Email</p>
+                  <p class="text-gray-600 dark:text-gray-300 text-sm">info@sketchnomad.com</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                  <svg class="w-5 h-5 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-medium text-gray-900 dark:text-white text-sm">Location</p>
+                  <p class="text-gray-600 dark:text-gray-300 text-sm">Singapore</p>
+                </div>
+              </div>
+
+              <div class="flex items-start space-x-4">
+                <div class="flex-shrink-0 w-10 h-10 bg-primary-100 dark:bg-primary-800 rounded-lg flex items-center justify-center">
+                  <svg class="w-5 h-5 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-medium text-gray-900 dark:text-white text-sm">Response Time</p>
+                  <p class="text-gray-600 dark:text-gray-300 text-sm">Usually within 24 hours</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-primary-200 dark:border-gray-600">
+              <h4 class="font-medium text-gray-900 dark:text-white mb-4 text-sm">Quick Tips</h4>
+              <ul class="space-y-2 text-xs text-gray-600 dark:text-gray-400">
+                <li class="flex items-start">
+                  <span class="text-primary-500 mr-2">•</span>
+                  <span>Be specific about your inquiry for faster assistance</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-primary-500 mr-2">•</span>
+                  <span>Double-check your email address for typos</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-primary-500 mr-2">•</span>
+                  <span>Check your spam folder for our response</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  
+  <script>
+    // EmailJS Types Declaration
+    declare global {
+      interface Window {
+        emailjs: {
+          init: (publicKey: string) => void;
+          send: (serviceId: string, templateId: string, templateParams: Record<string, string>) => Promise<{status: number, text: string}>;
+        };
+      }
+    }
+
+    // Contact Form Configuration - EmailJS Only
+    const CONTACT_CONFIG = {
+      service: 'emailjs',
+      emailjs: {
+        serviceId: import.meta.env.PUBLIC_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID',
+        templateId: import.meta.env.PUBLIC_EMAILJS_CONTACT_TEMPLATE_ID || 'YOUR_TEMPLATE_ID',
+        publicKey: import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('contact-form') as HTMLFormElement;
+      const statusDiv = document.getElementById('form-status');
+      const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+      const submitText = document.getElementById('submit-text');
+      const submitLoading = document.getElementById('submit-loading');
+
+      if (!form) {
+        console.error('Contact form not found');
+        return;
+      }
+
+      // Wait for EmailJS to load, then initialize
+      const initEmailJS = () => {
+        if (window.emailjs) {
+          try {
+            window.emailjs.init(CONTACT_CONFIG.emailjs.publicKey);
+            console.log('EmailJS initialized successfully');
+          } catch (error) {
+            console.error('EmailJS initialization failed:', error);
+          }
+        } else {
+          console.error('EmailJS library not loaded');
+        }
+      };
+
+      // Initialize EmailJS when ready
+      if (window.emailjs) {
+        initEmailJS();
+      } else {
+        // Wait for script to load
+        setTimeout(initEmailJS, 1000);
+      }
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        console.log('Form submitted');
+
+        // Validate required fields
+        const name = (document.getElementById('name') as HTMLInputElement).value.trim();
+        const email = (document.getElementById('email') as HTMLInputElement).value.trim();
+        const message = (document.getElementById('message') as HTMLTextAreaElement).value.trim();
+
+        if (!name || !email || !message) {
+          showStatus('error', 'Please fill in all required fields.');
+          return;
+        }
+
+        // Check if EmailJS service is configured
+        if (CONTACT_CONFIG.emailjs.serviceId === 'YOUR_SERVICE_ID' || 
+            CONTACT_CONFIG.emailjs.templateId === 'YOUR_TEMPLATE_ID' ||
+            CONTACT_CONFIG.emailjs.publicKey === 'YOUR_PUBLIC_KEY') {
+          showStatus('error', 'EmailJS is not configured yet. Please set up your environment variables.');
+          return;
+        }
+
+        // Show loading state
+        if (submitBtn && submitText && submitLoading) {
+          submitBtn.disabled = true;
+          submitText.classList.add('hidden');
+          submitLoading.classList.remove('hidden');
+        }
+
+        try {
+          await sendViaEmailJS();
+          showStatus('success', 'Thank you for your message! We\'ll get back to you soon.');
+          form.reset();
+        } catch (error) {
+          console.error('Form submission error:', error);
+          showStatus('error', 'Something went wrong. Please try again or contact us directly at info@sketchnomad.com');
+        } finally {
+          // Reset button state
+          if (submitBtn && submitText && submitLoading) {
+            submitBtn.disabled = false;
+            submitText.classList.remove('hidden');
+            submitLoading.classList.add('hidden');
+          }
+        }
+      });
+
+      async function sendViaEmailJS() {
+        if (!window.emailjs) {
+          throw new Error('EmailJS not loaded. Please refresh the page and try again.');
+        }
+
+        const formData = new FormData(form);
+        const templateParams = {
+          from_name: 'Sketch Nomad Contact Form', // Use your site name as sender
+          from_email: 'info@sketchnomad.com', // Use an email your SMTP can send from
+          subject: formData.get('subject')?.toString() || 'Contact Form Submission',
+          message: formData.get('message')?.toString() || '',
+          visitor_name: formData.get('name')?.toString() || '',
+          visitor_email: formData.get('email')?.toString() || '',
+          reply_to: formData.get('email')?.toString() || ''
+        };
+
+        console.log('Sending email with params:', templateParams);
+
+        try {
+          const response = await window.emailjs.send(
+            CONTACT_CONFIG.emailjs.serviceId,
+            CONTACT_CONFIG.emailjs.templateId,
+            templateParams
+          );
+          console.log('EmailJS response:', response);
+          return response;
+        } catch (error) {
+          console.error('EmailJS send error:', error);
+          throw error;
+        }
+      }
+
+      function showStatus(type: 'success' | 'error', message: string) {
+        // Fallback inline status (keeps existing layout)
+        if (statusDiv) {
+          const bgColor = type === 'success' ? 'bg-green-100 border-green-400 text-green-700' : 'bg-red-100 border-red-400 text-red-700';
+          const icon = type === 'success' ? '✓' : '✗';
+
+          statusDiv.innerHTML = `
+            <div class="p-4 border rounded-lg ${bgColor}">
+              <div class="flex items-center">
+                <span class="text-lg mr-2">${icon}</span>
+                <span class="font-medium">${message}</span>
+              </div>
+            </div>
+          `;
+
+          statusDiv.classList.remove('hidden');
+          statusDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+          // Auto-hide inline success messages after 5 seconds
+          if (type === 'success') {
+            setTimeout(() => {
+              statusDiv.classList.add('hidden');
+            }, 5000);
+          }
+        }
+
+        // Also show a floating toast in the top-right for clearer UX
+        try {
+          let toastContainer = document.getElementById('form-toast-container');
+          if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.id = 'form-toast-container';
+            toastContainer.setAttribute('aria-live', 'polite');
+            Object.assign((toastContainer as HTMLElement).style, {
+              position: 'fixed',
+              top: '1rem',
+              right: '1rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.5rem',
+              zIndex: '9999',
+            });
+            document.body.appendChild(toastContainer);
+          }
+
+          const toast = document.createElement('div');
+          // Basic inline styling so it works even if Tailwind classes are purged
+          Object.assign((toast as HTMLElement).style, {
+            minWidth: '260px',
+            maxWidth: '360px',
+            padding: '12px 14px',
+            borderRadius: '10px',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+            color: '#fff',
+            opacity: '1',
+            transition: 'opacity 0.25s ease',
+          });
+
+          if (type === 'success') {
+            toast.style.background = '#16a34a'; // green-600
+          } else {
+            toast.style.background = '#dc2626'; // red-600
+          }
+
+          // If error, ensure we advise manual email fallback
+          let displayMessage = message;
+          if (type === 'error' && !/info@sketchnomad\.com/.test(message)) {
+            displayMessage = `${message} If this keeps failing, please email us directly at info@sketchnomad.com`;
+          }
+
+          toast.innerHTML = `
+            <div style="font-weight:600; margin-bottom:6px">${type === 'success' ? 'Success' : 'Error'}</div>
+            <div style="font-size:13px; line-height:1.3">${displayMessage}</div>
+          `;
+
+          toastContainer.appendChild(toast);
+
+          // Auto-hide depending on type
+          const timeout = type === 'success' ? 4000 : 7000;
+          setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+          }, timeout);
+        } catch (e) {
+          // If toast creation fails, log but do not throw
+          console.error('Toast error', e);
+        }
+      }
+    });
+  </script>
+</Layout>

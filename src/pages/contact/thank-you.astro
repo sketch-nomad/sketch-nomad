@@ -1,0 +1,67 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Headline from '~/components/ui/Headline.astro';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Button from '~/components/ui/Button.astro';
+
+const metadata = {
+  title: 'Thank You - Message Sent',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="px-6 py-12 md:py-16 lg:py-20 mx-auto max-w-4xl text-center">
+    <WidgetWrapper>
+      <div class="max-w-2xl mx-auto">
+        <!-- Success Icon -->
+        <div class="mb-8">
+          <div class="mx-auto w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+        </div>
+
+        <Headline
+          title="Thank You!"
+          subtitle="Your message has been sent successfully. We appreciate you reaching out to us."
+          tagline="Message Sent"
+        />
+
+        <div class="space-y-6 mb-8">
+          <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">What happens next?</h3>
+            <ul class="space-y-2 text-gray-600 dark:text-gray-400 text-left">
+              <li class="flex items-start space-x-2">
+                <span class="text-green-600 dark:text-green-400 mt-1">•</span>
+                <span>We'll review your message within 24 hours</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-green-600 dark:text-green-400 mt-1">•</span>
+                <span>You'll receive a response at the email address you provided</span>
+              </li>
+              <li class="flex items-start space-x-2">
+                <span class="text-green-600 dark:text-green-400 mt-1">•</span>
+                <span>Don't forget to check your spam folder just in case</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="text-gray-600 dark:text-gray-400">
+            <p>In the meantime, feel free to explore more of our site or follow us on social media for the latest updates on plein air painting events and tips.</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button href="/" variant="primary">
+            Back to Home
+          </Button>
+          <Button href="/plein-air-hub" variant="secondary">
+            Explore Plein Air Hub
+          </Button>
+        </div>
+      </div>
+    </WidgetWrapper>
+  </section>
+</Layout>

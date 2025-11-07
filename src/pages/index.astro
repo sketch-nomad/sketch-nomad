@@ -1,0 +1,212 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Features from '~/components/widgets/Features.astro';
+import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+
+const metadata = {
+  title: 'Sketch Nomad – Connect with Outdoor Artists Worldwide',
+  description:
+    'Join Sketch Nomad, the platform for outdoor artists. Share location-tagged artwork, discover scenic painting spots, and connect with fellow artists worldwide.',
+  keywords:
+    'outdoor art, plein air, sketch nomad, landscape painting, nature sketching, urban sketching, art community',
+  ignoreTitleTemplate: true,
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero Widget ******************* -->
+
+  <Hero2
+    image={{
+      src: 'https://images.unsplash.com/photo-1512445854790-1654cf4b792a?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80',
+      alt: 'Artist sketching outdoors',
+    }}
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Open Web App',
+        href: 'https://sketchnomad.app',
+        target: '_blank',
+        icon: 'tabler:external-link',
+      },
+      {
+        text: 'Explore Features',
+        href: '#features',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      <span class="text-accent dark:text-white highlight">Sketch Nomad</span><br class="hidden sm:block" />
+    </Fragment>
+
+    <Fragment slot="title">
+      <br class="p-0 m-0 sm:hidden" />
+      <span class="text-sm sm:text-xl lg:text-4xl">
+        The Platform for <span
+          id="animated-text"
+          class="text-sm sm:text-xl lg:text-4xl text-accent dark:text-white font-bold">Urban Sketchers</span
+        >
+      </span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      <span class="hidden sm:inline">
+        Track your plein air adventures and connect with outdoor artists worldwide.
+      </span>
+      Share location-tagged artwork and discover scenic spots with a global community of sketch nomads.
+
+      <div class="text-gray-500 dark:text-gray-400 text-sm p-1 mb-2">• Web App First • iOS & Android Coming Soon</div>
+    </Fragment>
+  </Hero2>
+
+  <!-- Features Widget *************** -->
+  <Features
+    id="features"
+    tagline="Features"
+    title="What's Here Now & What's Coming Next"
+    subtitle="Explore our current features and get excited about the innovative tools we're building for the outdoor art community."
+    items={[
+      {
+        title: 'GPS Location Tagging',
+        description:
+          'Tag your artwork with precise GPS coordinates, helping fellow artists discover and visit the exact scenic locations where your masterpieces were created.',
+        icon: 'tabler:map-pin',
+      },
+      {
+        title: 'Global Artist Community',
+        description:
+          'Share your outdoor sketches and paintings with artists worldwide, and explore stunning artwork from creators across the globe.',
+        icon: 'tabler:photo',
+      },
+      {
+        title: 'Interactive Discovery Maps',
+        description:
+          'Find new painting locations through our interactive mapping system, perfect for artists seeking fresh inspiration and scenic spots.',
+        icon: 'tabler:map-2',
+      },
+      {
+        title: 'Artist Connections',
+        description:
+          'Connect with fellow outdoor artists, follow their work, and build lasting relationships within our creative community.',
+        icon: 'tabler:users',
+      },
+      {
+        title: 'Local Art Events',
+        description:
+          'Discover and organize sketching meetups in your area, joining other artists for collaborative outdoor painting sessions.',
+        icon: 'tabler:calendar-event',
+      },
+      {
+        title: 'Much More Coming Soon',
+        description:
+          'Weather integration, art supply recommendations, skill-building tutorials, augmented reality features, and many more innovative tools designed specifically for outdoor artists. Check out our roadmap page for detailed development plans.',
+        icon: 'tabler:stars',
+      },
+    ]}
+  />
+
+
+
+  <!-- HighlightedPosts Widget ******* -->
+
+  <BlogLatestPosts
+    title="Discover the World of Outdoor Art"
+    information={`Explore our blog featuring art history, artist spotlights, and community events.
+          Learn about painting traditions, discover works from renowned outdoor artists,
+          and find featured sketches from breathtaking locations worldwide.
+        `}
+  />
+
+  <!-- FAQs Widget ******************* -->
+  <FAQs
+    title="A Few Common Questions"
+    subtitle="Here are some answers to questions we often hear. If you have others, please feel free to reach out."
+    tagline="FAQs"
+    classes={{ container: 'max-w-6xl' }}
+    items={[
+      {
+      title: 'What is Sketch Nomad?',
+      description:
+        "It's a simple, quiet place for outdoor artists to document their work and connect with others. We wanted to create a tool to help you build a personal map of your art journey and, if you wish, share it with a like-minded community.",
+      },
+      {
+      title: 'Is this for professional artists only?',
+      description:
+        'Not at all. Sketch Nomad is for everyone who enjoys creating art outdoors, whether you\'re a seasoned professional, a weekend hobbyist, or just starting your journey. We celebrate the act of creation itself.',
+      },
+      {
+      title: 'How does location tagging work?',
+      description:
+        "When you upload a piece of art, you can attach the GPS location where you created it. This helps you keep a beautiful, personal map of your spots. If you choose, it also helps other artists in the community discover new places to paint.",
+      },
+      {
+      title: 'What is your stance on AI and artist data?',
+      description:
+        "Your art and data are yours, period. We will never use your artwork to train AI models. We are committed to being a trusted, private space for artists to share their work without worry.",
+      },
+      {
+      title: 'Is Sketch Nomad free?',
+      description:
+        'Yes. Our goal is to support the outdoor art community, and we plan to always offer a free version of Sketch Nomad. We believe in fostering a creative space without financial barriers.',
+      },
+      {
+      title: 'When can I use the app?',
+      description:
+        "We're taking our time to build Sketch Nomad thoughtfully and are targeting a release in Q3 2025. If you join our waitlist, we'll send you a quiet note as soon as it's ready for you to explore. We appreciate your patience.",
+      },
+    ]}
+  />
+</Layout>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const artistTypes = [
+      'Nature Journalers',
+      'Outdoor Artists',
+      'Plein Air Painters',
+      'Sketch Nomads',
+      'Urban Sketchers',
+    ];
+
+    let currentIndex = 0;
+    const textElement = document.getElementById('animated-text');
+
+    if (!textElement) {
+      console.error('Animated text element not found');
+      return;
+    }
+
+    function changeText() {
+      if (!textElement) return;
+
+      // Fade out
+      textElement.style.opacity = '0';
+      textElement.style.transform = 'translateY(10px)';
+
+      setTimeout(() => {
+        if (!textElement) return;
+
+        // Change text
+        currentIndex = (currentIndex + 1) % artistTypes.length;
+        textElement.textContent = artistTypes[currentIndex];
+
+        // Fade in
+        textElement.style.opacity = '1';
+        textElement.style.transform = 'translateY(0)';
+      }, 300);
+    }
+
+    // Add CSS for smooth transitions
+    textElement.style.transition = 'all 0.3s ease-in-out';
+
+    // Start animation after initial delay
+    setTimeout(() => {
+      setInterval(changeText, 2500);
+    }, 2000);
+  });
+</script>

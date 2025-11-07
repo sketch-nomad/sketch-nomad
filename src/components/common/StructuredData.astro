@@ -1,0 +1,109 @@
+---
+export interface Props {
+  type?: 'WebSite' | 'Organization' | 'Article' | 'Blog';
+  data?: Record<string, unknown>;
+}
+
+const { type = 'WebSite', data = {} } = Astro.props;
+
+const baseSchema = {
+  '@context': 'https://schema.org',
+  '@type': type,
+};
+
+let schema = {};
+
+switch (type) {
+  case 'WebSite':
+    schema = {
+      ...baseSchema,
+      name: 'Sketch Nomad - Community for Plein Air Sketchers & Outdoor Artists',
+      description: 'The platform for plein air sketchers and outdoor artists to share location-tagged artwork, discover scenic spots, and connect with en plein air painters worldwide.',
+      url: 'https://sketchnomad.com',
+      sameAs: [
+        'https://sketchnomad.app'
+      ],
+      keywords: 'plein air, sketch nomad, plein air sketchers, outdoor artists, en plein air, plein air painting, landscape artists, urban sketchers, outdoor sketching, plein air community',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: 'https://sketchnomad.com/search?q={search_term_string}',
+        'query-input': 'required name=search_term_string'
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Sketch Nomad',
+        description: 'Platform connecting plein air sketchers and outdoor artists worldwide'
+      },
+      ...data
+    };
+    break;
+
+  case 'Organization':
+    schema = {
+      ...baseSchema,
+      name: 'Sketch Nomad',
+      description: 'The platform for plein air sketchers and outdoor artists to share location-tagged artwork and connect with fellow en plein air painters.',
+      url: 'https://sketchnomad.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://sketchnomad.com/assets/images/default.png'
+      },
+      sameAs: [
+        'https://sketchnomad.app'
+      ],
+      foundingDate: '2024',
+      keywords: 'plein air community, outdoor artists, plein air sketchers, en plein air platform',
+      ...data
+    };
+    break;
+
+  case 'Article':
+    schema = {
+      ...baseSchema,
+      headline: data.title || '',
+      description: data.description || '',
+      author: {
+        '@type': 'Organization',
+        name: 'Sketch Nomad'
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Sketch Nomad',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://sketchnomad.com/assets/images/default.png'
+        }
+      },
+      datePublished: data.publishDate || new Date().toISOString(),
+      dateModified: data.modifiedDate || data.publishDate || new Date().toISOString(),
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': data.url || ''
+      },
+      ...data
+    };
+    break;
+
+  case 'Blog':
+    schema = {
+      ...baseSchema,
+      name: 'Sketch Nomad Blog',
+      description: 'Articles about plein air art history, outdoor artist spotlights, en plein air techniques, and community events for plein air sketchers worldwide.',
+      url: 'https://sketchnomad.com/blog',
+      publisher: {
+        '@type': 'Organization',
+        name: 'Sketch Nomad'
+      },
+      about: {
+        '@type': 'Thing',
+        name: 'Plein Air Art',
+        description: 'The practice of painting outdoors, capturing natural light and landscapes en plein air'
+      },
+      keywords: 'plein air blog, outdoor art techniques, plein air painting tips, en plein air tutorials, outdoor artist community',
+      ...data
+    };
+    break;
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)}></script>

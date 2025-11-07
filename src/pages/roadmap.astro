@@ -1,0 +1,163 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+
+const metadata = {
+  title: 'Roadmap - What\'s Next for Sketch Nomad | Plein Air Location App',
+  description:
+    'See what new features we\'re working on for Sketch Nomad. Our development plans for the plein air location tracking and artist community app.',
+  keywords:
+    'sketch nomad roadmap, plein air app updates, outdoor artist app features, development plans, upcoming features, location tracking app',
+};
+---
+
+<Layout metadata={metadata}>
+  <HeroText
+    tagline="Development Roadmap"
+    title="What's Next for Sketch Nomad"
+    subtitle="Here's what we're working on to help outdoor artists track locations, organize their work, and connect with the plein air community."
+  />
+
+  <Features
+    id="roadmap-q3-2025"
+    tagline="Q3 2025"
+    title="Near-term Improvements"
+    subtitle="Features we're currently working on or planning for the next few months."
+    items={[
+      {
+        title: 'Artist Portfolio System',
+        description:
+          'Create and organize your plein air portfolio in the app with photo galleries and artwork organization.',
+        icon: 'tabler:photo',
+      },
+      {
+        title: 'Enhanced Location Mapping',
+        description:
+          'Interactive maps with intelligent clustering that displays painting locations at any zoom level. View regional activity from afar, then zoom in to discover specific painting spots.',
+        icon: 'tabler:map-pin',
+      },
+      {
+        title: 'Advanced Location Notes',
+        description:
+          'Rich text editor for location notes with photo attachments, sketches, and detailed painting condition records.',
+        icon: 'tabler:notes',
+      },
+      {
+        title: 'Historical and Featured Artists Showcase',
+        description:
+          'Explore portfolios of curated plein air masters and contemporary featured artists with their techniques and locations.',
+        icon: 'tabler:star',
+      },
+      {
+        title: 'Social Sharing Features',
+        description:
+          'Share your plein air artwork and painting locations with the community from within the app.',
+        icon: 'tabler:share',
+      },
+    ]}
+  />
+
+  <Features
+    id="roadmap-q4-2025"
+    tagline="Q4 2025"
+    title="Major Feature Additions"
+    subtitle="Bigger features we're planning for later in the year."
+    items={[
+      {
+        title: 'Multi-Platform Expansion',
+        description:
+          'Mobile and web versions of the app with synced data across all your devices.',
+        icon: 'tabler:devices',
+      },
+      {
+        title: 'Event Planning Tools',
+        description:
+          'Find and organize plein air painting events, workshops, and group sessions with calendar features.',
+        icon: 'tabler:calendar-event',
+      },
+
+      {
+        title: 'Community Features',
+        description:
+          'Connect with other plein air artists, join local groups, and participate in community challenges.',
+        icon: 'tabler:users-group',
+      },
+    ]}
+  />
+
+  <Content
+    isReversed
+    tagline="Long-term Vision"
+    title="Future Horizons (2026-2027)"
+    items={[
+      {
+        title: 'Weather Integration',
+        description:
+          'Real-time weather data and forecasting to help artists plan their outdoor painting sessions for optimal conditions.',
+        icon: 'tabler:temperature-sun',
+      },
+      {
+        title: 'Smart Perspective & AR Tools',
+        description:
+          'Augmented reality features with intelligent perspective grid overlays and composition guides to help artists visualize scenes and achieve accurate proportions in their plein air work.',
+        icon: 'tabler:augmented-reality',
+      },
+
+      {
+        title: 'Offline Mode Improvements',
+        description:
+          'Better offline functionality for remote painting locations with enhanced map caching and location storage.',
+        icon: 'tabler:wifi-off',
+      },
+      {
+        title: 'Educational Content Hub',
+        description:
+          'Integrated tutorials, technique guides, and masterclasses from renowned plein air artists and instructors.',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+      alt: 'Digital roadmap and planning concept',
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        Building the Future of Plein Air Art
+      </h3>
+      Our roadmap is driven by feedback from the plein air community. We're constantly listening to artists' needs and incorporating
+      the most requested features into our development pipeline.
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800"></div>
+    </Fragment>
+  </Content>
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Try Web App',
+        href: 'https://sketchnomad.app',
+        target: '_blank',
+        icon: 'tabler:external-link',
+      },
+      {
+        variant: 'secondary',
+        text: 'View Changelog',
+        href: '/changelog',
+        icon: 'tabler:list-check',
+      },
+    ]}
+  >
+    <Fragment slot="title"> Want to Shape Our Roadmap? </Fragment>
+
+    <Fragment slot="subtitle">
+      Try out the Sketch Nomad web app today and share your feedback. Your input helps us prioritize features and build
+      the tools that plein air artists really need.
+    </Fragment>
+  </CallToAction>
+</Layout>

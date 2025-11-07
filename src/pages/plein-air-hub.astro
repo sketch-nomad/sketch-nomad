@@ -1,0 +1,233 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import pleinAirBooks from '~/assets/images/plein-air-books.jpeg';
+
+const metadata = {
+  title: 'Plein Air Hub - Resources & Community for Outdoor Artists',
+  description: 'Helpful plein air painting resources and tips. Connect with outdoor artists worldwide and discover new painting locations. A growing community for en plein air enthusiasts.',
+  keywords: 'plein air hub, outdoor art guide, en plein air techniques, outdoor artists community, plein air supplies, landscape painting, plein air locations, outdoor sketching',
+};
+---
+
+<Layout metadata={metadata}>
+  <!-- Hero: Welcome to the Hub -->
+  <HeroText
+    tagline="Plein Air Hub"
+    title="Your Outdoor Art Sanctuary"
+    subtitle="A quiet corner for artists who find their canvas in the open air. Here, we share simple tips, celebrate the creative process, and connect with a community that understands the joy of painting under the sky."
+  />
+
+  <!-- Getting Started Section -->
+  <Content
+    isReversed
+    tagline="First Brushstrokes"
+    title="Beginning Your Plein Air Adventure"
+    items={[
+      {
+        title: 'Capturing the Moment',
+        description: 'Learn simple techniques to quickly capture the essence of a scene before the light changes.',
+      },
+      {
+        title: 'Embracing Natural Light',
+        description: 'A few tips on understanding and working with the shifting light of the outdoors.',
+      },
+      {
+        title: 'Composing Your Scene',
+        description: 'Practical advice for finding and framing beautiful compositions in nature.',
+      },
+      {
+        title: 'Painting with the Weather',
+        description: 'Simple strategies for adapting your process to different seasons and conditions.',
+      },
+    ]}
+    image={{
+      src: pleinAirBooks,
+      alt: 'A collection of books about plein air painting, suggesting a place of learning.'
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        A Gentle Start
+      </h3>
+      Whether you're new to outdoor painting or seeking a fresh perspective, these fundamentals are here to support your first steps.
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-green-50 dark:bg-slate-800"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Equipment & Supplies -->
+  <Features2
+    title="Gathering Your Tools"
+    subtitle="Thoughtful gear suggestions to help you paint comfortably and focus on your art."
+    tagline="Essential Gear"
+    items={[
+      {
+        title: 'Easels & Supports',
+        description: 'A look at portable easels that offer stability without being a burden to carry.',
+        icon: 'tabler:brush',
+      },
+      {
+        title: 'Choosing Your Medium',
+        description: 'Guidance on art materials that perform well in ever-changing outdoor environments.',
+        icon: 'tabler:palette',
+      },
+      {
+        title: 'The Compact Kit',
+        description: 'Ideas for creating a minimal, easy-to-carry kit for spontaneous painting sessions.',
+        icon: 'tabler:briefcase',
+      },
+      {
+        title: 'Comfort in the Field',
+        description: 'Simple gear like umbrellas and chairs that can make a world of difference.',
+        icon: 'tabler:umbrella',
+      },
+      {
+        title: 'Helpful Digital Companions',
+        description: 'A few useful apps for tracking weather, light, and discovering new locations.',
+        icon: 'tabler:device-mobile',
+      },
+      {
+        title: 'Carrying Your Work',
+        description: 'Practical solutions for transporting wet paintings and keeping your supplies organized.',
+        icon: 'tabler:package',
+      },
+    ]}
+  />
+
+  <!-- Artist Community & Types -->
+  <Features
+    id="artist-community"
+    tagline="Our Community"
+    title="A Place for Every Artist"
+    subtitle="We believe every artist’s perspective enriches our community. Find kindred spirits who share your passion for creating in nature."
+    items={[
+      {
+        title: 'Landscape Painters',
+        description: 'For those who translate the beauty of natural vistas onto their canvas.',
+        icon: 'tabler:palette',
+      },
+      {
+        title: 'Urban Sketchers',
+        description: 'For artists inspired by the energy of cityscapes, architecture, and daily life.',
+        icon: 'tabler:building',
+      },
+      {
+        title: 'Nature Journalers',
+        description: 'For those who document the quiet details of the natural world, from wildlife to botanicals.',
+        icon: 'tabler:leaf',
+      },
+      {
+        title: 'Hobbyists & Explorers',
+        description: 'For everyone who simply loves the process of painting outdoors, without pressure or expectation.',
+        icon: 'tabler:mood-smile',
+      },
+      {
+        title: 'Mentors & Guides',
+        description: 'For experienced artists who find joy in sharing their knowledge with others.',
+        icon: 'tabler:school',
+      },
+    ]}
+  />
+
+  <!-- Advanced Techniques -->
+  <Content
+    isReversed
+    tagline="Deeper Practice"
+    title="Honing Your Craft"
+    items={[
+      {
+        title: 'Discovering Painting Spots',
+        description: 'Tips for finding those quiet, inspiring locations that speak to you.',
+      },
+      {
+        title: 'The Nuances of Light',
+        description: 'A deeper look at color temperature and how it brings your scenes to life.',
+      },
+      {
+        title: 'Returning to a Scene',
+        description: 'Techniques for working on a single piece over multiple outdoor sessions.',
+      },
+      {
+        title: 'Crafting Depth & Mood',
+        description: 'Simple ways to create a sense of atmosphere and distance in your work.',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1737843070715-34adab5429ae?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      alt: 'An artist thoughtfully painting a landscape, representing the focus of honing one\'s craft.'
+    }}
+  >
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">
+        Evolving Your Art
+      </h3>
+      Gentle guidance for those looking to deepen their practice and develop a more personal artistic voice.
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800"></div>
+    </Fragment>
+  </Content>
+
+  <!-- Platform Features for Artists -->
+  <Features2
+    title="Tools for Your Artistic Journey"
+    subtitle="Simple, helpful features designed to support your creative process, not complicate it."
+    tagline="Artist Toolkit"
+    items={[
+      {
+        title: 'Your Art Map',
+        description: 'Privately save your painting locations to create a personal map of your artistic journey.',
+        icon: 'tabler:map-pin',
+      },
+      {
+        title: 'Field Notes',
+        description: 'Keep simple notes on weather, light, and colors for each of your paintings.',
+        icon: 'tabler:sun',
+      },
+      {
+        title: 'Visual Diary',
+        description: 'Document your work and watch your progress unfold over time.',
+        icon: 'tabler:chart-line',
+      },
+      {
+        title: 'Shared Wisdom',
+        description: 'A space to connect with other artists, share insights, and learn from one another.',
+        icon: 'tabler:users-group',
+      },
+    ]}
+  />
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Explore the App',
+        href: 'https://sketchnomad.app',
+        target: '_blank',
+        icon: 'tabler:palette',
+      },
+      {
+        variant: 'secondary',
+        text: 'See Our Roadmap',
+        href: '/roadmap',
+        icon: 'tabler:map',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Ready to Paint?
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Join our community on Sketch Nomad to discover inspiring locations, document your art, and connect with fellow plein air enthusiasts. It's free to get started.
+    </Fragment>
+  </CallToAction>
+</Layout>
