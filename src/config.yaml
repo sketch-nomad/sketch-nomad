@@ -10,17 +10,17 @@ site:
 metadata:
   title:
     default: Sketch Nomad – Community for Plein Air Sketchers & Artists
-    template: '%s — Sketch Nomad | Plein Air Sketchers Community'
+    template: '%s | Sketch Nomad'
   description: "Sketch Nomad is the platform for plein air sketchers and outdoor artists to share location-tagged artwork, discover scenic spots, and connect with fellow en plein air painters worldwide."
   robots:
     index: true
     follow: true
   openGraph:
     site_name: Sketch Nomad – Plein Air Sketchers Community
-    images: 
-      - url: '~/assets/images/default.png'
+    images:
+      - url: '~/assets/images/og-default.png'
         width: 1200
-        height: 628
+        height: 630
     type: website
   instagram:
     handle: '@maninesan'

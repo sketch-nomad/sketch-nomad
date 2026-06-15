@@ -1,6 +1,6 @@
 ---
 export interface Props {
-  type?: 'WebSite' | 'Organization' | 'Article' | 'Blog';
+  type?: 'WebSite' | 'Organization' | 'Article' | 'Blog' | 'BreadcrumbList';
   data?: Record<string, unknown>;
 }
 
@@ -24,11 +24,6 @@ switch (type) {
         'https://sketchnomad.app'
       ],
       keywords: 'plein air, sketch nomad, plein air sketchers, outdoor artists, en plein air, plein air painting, landscape artists, urban sketchers, outdoor sketching, plein air community',
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: 'https://sketchnomad.com/search?q={search_term_string}',
-        'query-input': 'required name=search_term_string'
-      },
       publisher: {
         '@type': 'Organization',
         name: 'Sketch Nomad',
@@ -46,7 +41,7 @@ switch (type) {
       url: 'https://sketchnomad.com',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://sketchnomad.com/assets/images/default.png'
+        url: 'https://sketchnomad.com/logo.png'
       },
       sameAs: [
         'https://sketchnomad.app'
@@ -71,7 +66,7 @@ switch (type) {
         name: 'Sketch Nomad',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://sketchnomad.com/assets/images/default.png'
+          url: 'https://sketchnomad.com/logo.png'
         }
       },
       datePublished: data.publishDate || new Date().toISOString(),
@@ -101,6 +96,18 @@ switch (type) {
       },
       keywords: 'plein air blog, outdoor art techniques, plein air painting tips, en plein air tutorials, outdoor artist community',
       ...data
+    };
+    break;
+
+  case 'BreadcrumbList':
+    schema = {
+      ...baseSchema,
+      itemListElement: ((data.items as Array<{ name: string; url: string }>) || []).map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        item: item.url,
+      })),
     };
     break;
 }
