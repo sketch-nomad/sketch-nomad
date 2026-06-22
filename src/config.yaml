@@ -2,7 +2,7 @@ site:
   name: Sketch Nomad
   site: 'https://sketchnomad.com'
   base: '/'
-  trailingSlash: false
+  trailingSlash: true
 
   googleSiteVerificationId: G4a_7zqGSvsklpVeSe95HzT1TW4V498Ost4ln_tDUFk
 

@@ -2,13 +2,21 @@
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import Button from '~/components/ui/Button.astro';
+import { getCanonical, getPermalink } from '~/utils/permalinks';
 
 const metadata = {
   title: 'Contact Us',
+  description:
+    'Get in touch with the Sketch Nomad team. Questions about plein air sketching, the app, or partnerships — we respond as soon as possible.',
 };
+
+const breadcrumbs = [
+  { name: 'Home', url: String(getCanonical('/')) },
+  { name: 'Contact', url: String(getCanonical(getPermalink('/contact'))) },
+];
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} breadcrumbs={breadcrumbs}>
   <HeroText
     tagline="Contact"
     title="Get in Touch"

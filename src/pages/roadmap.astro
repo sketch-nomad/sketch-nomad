@@ -4,6 +4,7 @@ import HeroText from '~/components/widgets/HeroText.astro';
 import Features from '~/components/widgets/Features.astro';
 import Content from '~/components/widgets/Content.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import { getCanonical, getPermalink } from '~/utils/permalinks';
 
 const metadata = {
   title: 'Roadmap - What\'s Next for Sketch Nomad | Plein Air Location App',
@@ -13,9 +14,14 @@ const metadata = {
     'sketch nomad roadmap, plein air app updates, outdoor artist app features, development plans, upcoming features, location tracking app',
   ignoreTitleTemplate: true,
 };
+
+const breadcrumbs = [
+  { name: 'Home', url: String(getCanonical('/')) },
+  { name: 'Roadmap', url: String(getCanonical(getPermalink('/roadmap'))) },
+];
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} breadcrumbs={breadcrumbs}>
   <HeroText
     tagline="Development Roadmap"
     title="What's Next for Sketch Nomad"

@@ -31,6 +31,10 @@ export default defineConfig({
     sitemap({
       changefreq: 'weekly',
       priority: 0.7,
+      filter: (page) => {
+        const path = new URL(page).pathname;
+        return !path.startsWith('/tag/') && path !== '/contact/thank-you/' && !path.match(/\/\d+\/$/);
+      },
     }),
     mdx(),
     icon({

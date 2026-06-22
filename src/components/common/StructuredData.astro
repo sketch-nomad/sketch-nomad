@@ -6,6 +6,11 @@ export interface Props {
 
 const { type = 'WebSite', data = {} } = Astro.props;
 
+const brandProfiles = [
+  'https://sketchnomad.app',
+  'https://www.instagram.com/sketchnomad.app/',
+];
+
 const baseSchema = {
   '@context': 'https://schema.org',
   '@type': type,
@@ -20,9 +25,7 @@ switch (type) {
       name: 'Sketch Nomad - Community for Plein Air Sketchers & Outdoor Artists',
       description: 'The platform for plein air sketchers and outdoor artists to share location-tagged artwork, discover scenic spots, and connect with en plein air painters worldwide.',
       url: 'https://sketchnomad.com',
-      sameAs: [
-        'https://sketchnomad.app'
-      ],
+      sameAs: brandProfiles,
       keywords: 'plein air, sketch nomad, plein air sketchers, outdoor artists, en plein air, plein air painting, landscape artists, urban sketchers, outdoor sketching, plein air community',
       publisher: {
         '@type': 'Organization',
@@ -43,9 +46,7 @@ switch (type) {
         '@type': 'ImageObject',
         url: 'https://sketchnomad.com/logo.png'
       },
-      sameAs: [
-        'https://sketchnomad.app'
-      ],
+      sameAs: brandProfiles,
       foundingDate: '2024',
       keywords: 'plein air community, outdoor artists, plein air sketchers, en plein air platform',
       ...data

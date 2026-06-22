@@ -3,16 +3,20 @@ import { getPermalink, getBlogPermalink } from './utils/permalinks';
 export const headerData = {
   links: [
     {
+      text: 'Plein Air Hub',
+      href: getPermalink('/plein-air-hub'),
+    },
+    {
+      text: 'Blog',
+      href: getBlogPermalink(),
+    },
+    {
       text: 'Roadmap',
       href: getPermalink('/roadmap'),
     },
     {
       text: 'Changelog',
       href: getPermalink('/changelog'),
-    },
-    {
-      text: 'Blog',
-      href: getBlogPermalink(),
     },
     {
       text: 'Contact',

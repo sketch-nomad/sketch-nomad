@@ -2,6 +2,7 @@
 import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import { getCanonical, getPermalink } from '~/utils/permalinks';
 
 const metadata = {
   title: 'Changelog - Sketch Nomad App Updates & Version History',
@@ -10,6 +11,11 @@ const metadata = {
     'sketch nomad changelog, app updates, version history, release notes, plein air app improvements, new features',
   ignoreTitleTemplate: true,
 };
+
+const breadcrumbs = [
+  { name: 'Home', url: String(getCanonical('/')) },
+  { name: 'Changelog', url: String(getCanonical(getPermalink('/changelog'))) },
+];
 
 const releases = [
   {
@@ -27,7 +33,7 @@ const releases = [
 ];
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} breadcrumbs={breadcrumbs}>
   <HeroText
     tagline="Version History"
     title="Sketch Nomad Changelog"

@@ -11,12 +11,21 @@ import type { Props as StructuredDataProps } from '~/components/common/Structure
 export interface Props {
   metadata?: MetaData;
   structuredData?: Array<StructuredDataProps>;
+  breadcrumbs?: Array<{ name: string; url: string }>;
 }
 
-const { metadata, structuredData } = Astro.props;
+const { metadata, structuredData = [], breadcrumbs } = Astro.props;
+
+const allStructuredData = [...structuredData];
+if (breadcrumbs?.length) {
+  allStructuredData.push({
+    type: 'BreadcrumbList',
+    data: { items: breadcrumbs },
+  });
+}
 ---
 
-<Layout metadata={metadata} structuredData={structuredData}>
+<Layout metadata={metadata} structuredData={allStructuredData}>
   <slot name="header">
     <Header {...headerData} isSticky showToggleTheme position='left' />
   </slot>

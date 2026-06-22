@@ -6,6 +6,7 @@ import Features from '~/components/widgets/Features.astro';
 import Content from '~/components/widgets/Content.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
 import pleinAirBooks from '~/assets/images/plein-air-books.jpeg';
+import { getCanonical, getPermalink } from '~/utils/permalinks';
 
 const metadata = {
   title: 'Plein Air Hub - Resources & Community for Outdoor Artists',
@@ -13,9 +14,14 @@ const metadata = {
   keywords: 'plein air hub, outdoor art guide, en plein air techniques, outdoor artists community, plein air supplies, landscape painting, plein air locations, outdoor sketching',
   ignoreTitleTemplate: true,
 };
+
+const breadcrumbs = [
+  { name: 'Home', url: String(getCanonical('/')) },
+  { name: 'Plein Air Hub', url: String(getCanonical(getPermalink('/plein-air-hub'))) },
+];
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} breadcrumbs={breadcrumbs}>
   <!-- Hero: Welcome to the Hub -->
   <HeroText
     tagline="Plein Air Hub"
