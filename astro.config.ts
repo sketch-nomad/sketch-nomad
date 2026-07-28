@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url';
 import { defineConfig } from 'astro/config';
 
 import sitemap from '@astrojs/sitemap';
-import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
@@ -33,9 +32,6 @@ export default defineConfig({
     '/history-of-plein-air-painting': '/plein-air-history/',
   },
   integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
     sitemap({
       changefreq: 'weekly',
       priority: 0.7,
@@ -107,6 +103,15 @@ export default defineConfig({
       alias: {
         '~': path.resolve(__dirname, './src'),
       },
+    },
+    build: {
+      // Astro 7 / Vite 8's default CSS minifier (Lightning CSS, via Rolldown) has a bug that
+      // silently drops every `@media (min-width: ...)` block it processes on this project's
+      // Tailwind output — i.e. ALL responsive (`sm:`/`md:`/`lg:`/`xl:`) styles vanish from the
+      // production build only (dev mode is unaffected), while everything looks fine visually
+      // until you resize past a breakpoint. `astro-compress` (csso) still minifies the CSS
+      // afterwards, so disabling Vite's own pass here doesn't cost us an unminified stylesheet.
+      cssMinify: false,
     },
   },
 });
