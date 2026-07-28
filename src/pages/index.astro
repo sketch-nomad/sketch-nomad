@@ -1,7 +1,7 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 
-import Features from '~/components/widgets/Features.astro';
+import FeatureCards from '~/components/widgets/FeatureCards.astro';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
@@ -20,10 +20,32 @@ const metadata = {
   <!-- Hero Widget ******************* -->
 
   <Hero2
-    image={{
-      src: 'https://images.unsplash.com/photo-1512445854790-1654cf4b792a?ixlib=rb-4.0.3&auto=format&fit=crop&w=987&q=80',
-      alt: 'Artist sketching outdoors',
-    }}
+    tagline="The nomad's sketchbook · Est. 2025"
+    stamp="Web App First — iOS & Android Coming Soon"
+    pins={[
+      {
+        src: '~/assets/images/auvers-sur-oise.jpg',
+        alt: 'Auvers-sur-Oise, France',
+        label: 'Auvers-sur-Oise',
+        coords: '49.07°N 2.17°E',
+        top: 17,
+        left: 65,
+      },
+      {
+        src: '~/assets/images/taj-mahal.webp',
+        alt: 'Morning Mist in Taj Mahal, woodblock print by Hiroshi Yoshida',
+        label: 'Taj Mahal, Agra',
+        coords: '27.17°N 78.04°E',
+        top: 50,
+        left: 91,
+      },
+      {
+        label: 'Pin Your Sketch',
+        top: 70,
+        left: 15,
+        placeholder: true,
+      },
+    ]}
     actions={[
       {
         variant: 'primary',
@@ -33,22 +55,20 @@ const metadata = {
         icon: 'tabler:external-link',
       },
       {
+        variant: 'secondary',
         text: 'Explore Features',
         href: '#features',
       },
     ]}
   >
     <Fragment slot="title">
-      <span class="text-accent dark:text-white highlight">Sketch Nomad</span><br class="hidden sm:block" />
+      Sketch Nomad<br class="hidden sm:block" />
     </Fragment>
 
     <Fragment slot="title">
       <br class="p-0 m-0 sm:hidden" />
-      <span class="text-sm sm:text-xl lg:text-4xl">
-        The Platform for <span
-          id="animated-text"
-          class="text-sm sm:text-xl lg:text-4xl text-accent dark:text-white font-bold">Urban Sketchers</span
-        >
+      <span class="text-2xl sm:text-3xl lg:text-4xl text-muted font-normal">
+        The platform for <span id="animated-text" class="text-primary font-bold">Urban Sketchers</span>
       </span>
     </Fragment>
 
@@ -57,59 +77,57 @@ const metadata = {
         Track your plein air adventures and connect with outdoor artists worldwide.
       </span>
       Share location-tagged artwork and discover scenic spots with a global community of sketch nomads.
-
-      <div class="text-gray-500 dark:text-gray-400 text-sm p-1 mb-2">• Web App First • iOS & Android Coming Soon</div>
     </Fragment>
   </Hero2>
 
   <!-- Features Widget *************** -->
-  <Features
+  <FeatureCards
     id="features"
-    tagline="Features"
+    tagline="What's in the sketchbook"
     title="What's Here Now & What's Coming Next"
     subtitle="Explore our current features and get excited about the innovative tools we're building for the outdoor art community."
+    classes={{ container: 'max-w-6xl' }}
     items={[
       {
+        category: 'Location',
         title: 'GPS Location Tagging',
         description:
           'Tag your artwork with precise GPS coordinates, helping fellow artists discover and visit the exact scenic locations where your masterpieces were created.',
         icon: 'tabler:map-pin',
       },
       {
+        category: 'Community',
         title: 'Global Artist Community',
         description:
           'Share your outdoor sketches and paintings with artists worldwide, and explore stunning artwork from creators across the globe.',
         icon: 'tabler:photo',
       },
       {
+        category: 'Discovery',
         title: 'Interactive Discovery Maps',
         description:
           'Find new painting locations through our interactive mapping system, perfect for artists seeking fresh inspiration and scenic spots.',
         icon: 'tabler:map-2',
       },
       {
-        title: 'Artist Connections',
-        description:
-          'Connect with fellow outdoor artists, follow their work, and build lasting relationships within our creative community.',
-        icon: 'tabler:users',
-      },
-      {
-        title: 'Local Art Events',
-        description:
-          'Discover and organize sketching meetups in your area, joining other artists for collaborative outdoor painting sessions.',
-        icon: 'tabler:calendar-event',
-      },
-      {
+        category: 'Roadmap',
         title: 'Much More Coming Soon',
         description:
-          'Weather integration, art supply recommendations, skill-building tutorials, augmented reality features, and many more innovative tools designed specifically for outdoor artists. Check out our roadmap page for detailed development plans.',
+          'Weather integration, art supply recommendations, skill-building tutorials, augmented reality features, and more tools built for outdoor artists.',
         icon: 'tabler:stars',
+        status: 'soon',
+        callToAction: {
+          text: 'View the roadmap',
+          href: '/roadmap',
+          icon: 'tabler:arrow-right',
+        },
       },
     ]}
-  />
-
-
-
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-surface/40 dark:bg-surface/20" aria-hidden="true"></div>
+    </Fragment>
+  </FeatureCards>
   <!-- HighlightedPosts Widget ******* -->
 
   <BlogLatestPosts

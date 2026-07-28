@@ -28,6 +28,21 @@ const { post } = Astro.props as Props;
 const url = getCanonical(getPermalink(post.permalink, 'post'));
 const image = (await findImage(post.image)) as ImageMetadata | string | undefined;
 
+// Normalize any author-supplied canonical (e.g. from post frontmatter) so it can never
+// drift from the site's trailing-slash convention and end up pointing at a redirecting
+// or non-existent URL (a common cause of "Alternate page with proper canonical tag" and
+// "Page with redirect" issues in Google Search Console).
+const normalizeCanonical = (value?: string): string | undefined => {
+  if (!value) return undefined;
+  try {
+    const parsed = new URL(value);
+    const siteOrigin = new URL(String(SITE.site)).origin;
+    return parsed.origin === siteOrigin ? String(getCanonical(parsed.pathname)) : value;
+  } catch {
+    return value;
+  }
+};
+
 const metadata = merge(
   {
     title: post.title,
@@ -44,7 +59,7 @@ const metadata = merge(
         : {}),
     },
   },
-  { ...(post?.metadata ? { ...post.metadata, canonical: post.metadata?.canonical || url } : {}) }
+  { ...(post?.metadata ? { ...post.metadata, canonical: normalizeCanonical(post.metadata?.canonical) || url } : {}) }
 ) as MetaData;
 
 const imageUrl = image ? String(new URL(typeof image === 'string' ? image : image.src, Astro.site)) : undefined;

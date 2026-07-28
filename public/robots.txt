@@ -2,8 +2,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://sketchnomad.com/sitemap-index.xml
-
-Disallow: /admin/
-Disallow: /api/
-Disallow: /tag/
-Disallow: /contact/thank-you/

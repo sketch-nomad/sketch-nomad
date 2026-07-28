@@ -223,9 +223,26 @@ export const astroAsseetsOptimizer: ImagesOptimizer = async (
     return [];
   }
 
+  const directSrc = typeof image === 'string' ? image : image.src;
+
+  // In dev, getImage() emits /_image URLs that 404. Use the resolved asset URL
+  // directly instead (same approach as Hero2.astro pin thumbnails).
+  if (import.meta.env.DEV) {
+    return breakpoints.map((w: number) => ({
+      src: directSrc,
+      width: w,
+    }));
+  }
+
   return Promise.all(
     breakpoints.map(async (w: number) => {
-      const result = await getImage({ src: image, width: w, inferSize: true, ...(format ? { format: format } : {}) });
+      const result = await getImage({
+        src: image,
+        width: w,
+        inferSize: true,
+        quality: 78,
+        ...(format ? { format: format } : {}),
+      });
 
       return {
         src: result?.src,

@@ -1,62 +1,64 @@
 ---
-import '@fontsource-variable/inter';
-
-// 'DM Sans'
-// Nunito
-// Dosis
-// Outfit
-// Roboto
-// Literata
-// 'IBM Plex Sans'
-// Karla
-// Poppins
-// 'Fira Sans'
-// 'Libre Franklin'
-// Inconsolata
-// Raleway
-// Oswald
-// 'Space Grotesk'
-// Urbanist
+import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/ibm-plex-sans';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '@fontsource/ibm-plex-mono/600.css';
 ---
 
 <style is:inline>
   :root {
-    --aw-font-sans: 'Inter Variable';
-    --aw-font-serif: 'Inter Variable';
-    --aw-font-heading: 'Inter Variable';
+    --aw-font-sans: 'IBM Plex Sans Variable';
+    --aw-font-serif: 'IBM Plex Sans Variable';
+    --aw-font-heading: 'Space Grotesk Variable';
+    --aw-font-mono: 'IBM Plex Mono';
 
-    --aw-color-primary: rgb(1 97 239);
-    --aw-color-secondary: rgb(1 84 207);
-    --aw-color-accent: rgb(109 40 217);
+    /* Channel triplets (no rgb() wrapper) so Tailwind's <alpha-value> opacity modifiers work */
+    --aw-color-primary: 193 68 14;
+    /* Pin red */
+    --aw-color-secondary: 143 54 32;
+    /* Rust (hover) */
+    --aw-color-accent: 62 92 78;
+    /* Moss */
 
-    --aw-color-text-heading: rgb(0 0 0);
-    --aw-color-text-default: rgb(16 16 16);
-    --aw-color-text-muted: rgb(16 16 16 / 66%);
-    --aw-color-bg-page: rgb(255 255 255);
+    --aw-color-text-heading: 30 36 51;
+    --aw-color-text-default: 35 42 59;
+    --aw-color-text-muted: rgb(35 42 59 / 78%);
+    --aw-color-bg-page: 255 255 255;
+    /* White */
+    --aw-color-surface: 246 247 247;
+    /* Card / board surface */
+    --aw-color-border: rgb(35 42 59 / 14%);
 
-    --aw-color-bg-page-dark: rgb(3 6 32);
+    --aw-color-bg-page-dark: 23 20 15;
 
     ::selection {
-      background-color: lavender;
+      background-color: rgb(193 68 14 / 25%);
     }
   }
 
   .dark {
-    --aw-font-sans: 'Inter Variable';
-    --aw-font-serif: 'Inter Variable';
-    --aw-font-heading: 'Inter Variable';
+    --aw-font-sans: 'IBM Plex Sans Variable';
+    --aw-font-serif: 'IBM Plex Sans Variable';
+    --aw-font-heading: 'Space Grotesk Variable';
+    --aw-font-mono: 'IBM Plex Mono';
 
-    --aw-color-primary: rgb(1 97 239);
-    --aw-color-secondary: rgb(1 84 207);
-    --aw-color-accent: rgb(109 40 217);
+    --aw-color-primary: 224 105 61;
+    /* Brighter pin-red for dark contrast */
+    --aw-color-secondary: 240 138 98;
+    --aw-color-accent: 122 157 132;
+    /* Lighter moss */
 
-    --aw-color-text-heading: rgb(247, 248, 248);
-    --aw-color-text-default: rgb(229 236 246);
-    --aw-color-text-muted: rgb(229 236 246 / 66%);
-    --aw-color-bg-page: rgb(3 6 32);
+    --aw-color-text-heading: 247 241 225;
+    --aw-color-text-default: 237 227 206;
+    --aw-color-text-muted: rgb(237 227 206 / 78%);
+    --aw-color-bg-page: 23 20 15;
+    /* Leather-dark */
+    --aw-color-surface: 34 29 22;
+    --aw-color-border: rgb(237 227 206 / 14%);
 
     ::selection {
-      background-color: black;
+      background-color: rgb(224 105 61 / 35%);
       color: snow;
     }
   }

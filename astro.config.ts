@@ -15,6 +15,8 @@ import astrowind from './vendor/integration';
 
 import { readingTimeRemarkPlugin, responsiveTablesRehypePlugin, lazyImagesRehypePlugin } from './src/utils/frontmatter';
 
+import { unified } from '@astrojs/markdown-remark';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const hasExternalScripts = false;
@@ -24,6 +26,12 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 export default defineConfig({
   output: 'static',
   site: 'https://sketchnomad.com',
+  compressHTML: true,
+  // Old/renamed URLs that may still be linked externally or indexed by search engines.
+  // Astro emits a redirect page for these on static builds.
+  redirects: {
+    '/history-of-plein-air-painting': '/plein-air-history/',
+  },
   integrations: [
     tailwind({
       applyBaseStyles: false,
@@ -33,7 +41,12 @@ export default defineConfig({
       priority: 0.7,
       filter: (page) => {
         const path = new URL(page).pathname;
-        return !path.startsWith('/tag/') && path !== '/contact/thank-you/' && !path.match(/\/\d+\/$/);
+        return (
+          !path.startsWith('/tag/') &&
+          path !== '/contact/thank-you/' &&
+          path !== '/plein-air-painting-app/' &&
+          !path.match(/\/\d+\/$/)
+        );
       },
     }),
     mdx(),
@@ -83,8 +96,10 @@ export default defineConfig({
   },
 
   markdown: {
-    remarkPlugins: [readingTimeRemarkPlugin],
-    rehypePlugins: [responsiveTablesRehypePlugin, lazyImagesRehypePlugin],
+    processor: unified({
+      remarkPlugins: [readingTimeRemarkPlugin],
+      rehypePlugins: [responsiveTablesRehypePlugin, lazyImagesRehypePlugin],
+    }),
   },
 
   vite: {

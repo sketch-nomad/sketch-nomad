@@ -7,16 +7,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--aw-color-primary)',
-        secondary: 'var(--aw-color-secondary)',
-        accent: 'var(--aw-color-accent)',
-        default: 'var(--aw-color-text-default)',
+        primary: 'rgb(var(--aw-color-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--aw-color-secondary) / <alpha-value>)',
+        accent: 'rgb(var(--aw-color-accent) / <alpha-value>)',
+        default: 'rgb(var(--aw-color-text-default) / <alpha-value>)',
         muted: 'var(--aw-color-text-muted)',
+        heading: 'rgb(var(--aw-color-text-heading) / <alpha-value>)',
+        surface: 'rgb(var(--aw-color-surface) / <alpha-value>)',
+        edge: 'var(--aw-color-border)',
+        page: 'rgb(var(--aw-color-bg-page) / <alpha-value>)',
+        'page-dark': 'rgb(var(--aw-color-bg-page-dark) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['var(--aw-font-sans, ui-sans-serif)', ...defaultTheme.fontFamily.sans],
         serif: ['var(--aw-font-serif, ui-serif)', ...defaultTheme.fontFamily.serif],
         heading: ['var(--aw-font-heading, ui-sans-serif)', ...defaultTheme.fontFamily.sans],
+        mono: ['var(--aw-font-mono, ui-monospace)', ...defaultTheme.fontFamily.mono],
       },
 
       animation: {
