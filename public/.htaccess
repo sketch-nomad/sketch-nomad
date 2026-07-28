@@ -1,0 +1,62 @@
+# ============================================================================
+# Sketch Nomad — Apache / Hostinger configuration
+#
+# This file ships from public/.htaccess and is copied into the build output's
+# root by Astro, so it lands in your web root exactly where Apache expects it
+# when you upload the contents of dist/ via FTP.
+# ============================================================================
+
+RewriteEngine On
+
+# ----------------------------------------------------------------------------
+# 1) Canonical host: force the bare (non-www) domain.
+#    sketchnomad.com and www.sketchnomad.com currently both serve the site
+#    with a 200 status and no redirect between them — that's duplicate
+#    content in Google's eyes. This makes www.sketchnomad.com 301 to the
+#    bare domain, matching the canonical URLs already emitted in every page's
+#    <link rel="canonical"> and astro.config.ts's `site` value.
+RewriteCond %{HTTP_HOST} ^www\.sketchnomad\.com$ [NC]
+RewriteRule ^ https://sketchnomad.com%{REQUEST_URI} [L,R=301]
+
+# ----------------------------------------------------------------------------
+# 2) Legacy URL redirects — true 301s (kept in sync with the `redirects`
+#    entry in astro.config.ts, which only produces a same-site meta-refresh
+#    page for static builds, not a real HTTP redirect).
+RewriteRule ^history-of-plein-air-painting/?$ /plein-air-history/ [L,R=301]
+
+# ----------------------------------------------------------------------------
+# 3) Real 404s. Without this, unmatched URLs may otherwise fall back to
+#    index.html on some shared-hosting configs (a "soft 404" — confirmed
+#    happening on the live site right now: any nonexistent URL currently
+#    returns the homepage with a 200 status, which wastes crawl budget and
+#    risks garbage URLs getting indexed).
+ErrorDocument 404 /404.html
+
+# ----------------------------------------------------------------------------
+# 4) Compress text-based responses.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE text/javascript application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml application/xml application/rss+xml
+</IfModule>
+
+# ----------------------------------------------------------------------------
+# 5) Caching. Hashed assets in /_astro/ never change content under the same
+#    filename, so they can be cached "forever". HTML must revalidate on every
+#    request so content edits go live immediately after each FTP upload.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|woff2?|jpe?g|png|webp|gif|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ----------------------------------------------------------------------------
+# 6) Basic hardening: no directory listings, hide this file itself.
+Options -Indexes
+
+<Files ".htaccess">
+  Require all denied
+</Files>
