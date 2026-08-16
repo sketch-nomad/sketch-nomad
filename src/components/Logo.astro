@@ -4,16 +4,16 @@ import Image from '~/components/common/Image.astro';
 import logoMark from '~/assets/images/logo-mark.webp';
 ---
 
-<span class="inline-flex items-center gap-2 self-center whitespace-nowrap">
+<span class="inline-flex items-center gap-2.5 self-center whitespace-nowrap">
   <Image
     src={logoMark}
     alt=""
-    width={36}
-    height={36}
-    widths={[36, 72]}
+    width={40}
+    height={40}
+    widths={[40, 80]}
     layout="fixed"
     loading="eager"
     class="dark:invert"
   />
-  <span class="text-xl font-heading font-bold tracking-tight text-heading">{SITE?.name}</span>
+  <span class="font-heading text-[1.3rem] font-bold leading-none tracking-[-0.035em] text-heading">{SITE?.name}</span>
 </span>
