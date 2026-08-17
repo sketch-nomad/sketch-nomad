@@ -23,7 +23,7 @@ export const headerData = {
       href: getPermalink('/contact'),
     },
   ],
-  actions: [{ variant: 'primary', text: 'Launch App', href: 'https://sketchnomad.app', target: '_blank' }],
+  actions: [{ variant: 'primary' as const, text: 'Launch App', href: 'https://sketchnomad.app', target: '_blank' as const }],
 };
 
 export const footerData = {
@@ -61,7 +61,7 @@ export const footerData = {
     { text: 'Privacy Policy', href: getPermalink('/privacy') },
   ],
   socialLinks: [
-    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/sketchnomad.app/' },
+    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/sketch.nomad/' },
   ],
   footNote: `
     © 2025 Sketch Nomad · Contact: <a class="text-primary underline" href="mailto:info@sketchnomad.com">info@sketchnomad.com</a> · All rights reserved.

@@ -9,9 +9,9 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: Sketch Nomad – Community for Plein Air Sketchers & Artists
+    default: Sketch Nomad – Urban Sketchers, Plein Air & Outdoor Artists
     template: '%s | Sketch Nomad'
-  description: "Sketch Nomad is the platform for plein air sketchers and outdoor artists to share location-tagged artwork, discover scenic spots, and connect with fellow en plein air painters worldwide."
+  description: "A community for urban sketchers, plein air painters, outdoor artists, and travel sketchers. Tag sketches to a place, find pleinair spots, and connect worldwide."
   robots:
     index: true
     follow: true
@@ -23,8 +23,8 @@ metadata:
         height: 630
     type: website
   instagram:
-    handle: '@maninesan'
-    site: '@maninesan'
+    handle: '@sketch.nomad'
+    site: '@sketch.nomad'
     cardType: summary_large_image
 
 i18n:

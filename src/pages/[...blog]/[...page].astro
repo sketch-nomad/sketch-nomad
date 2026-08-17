@@ -25,8 +25,9 @@ const currentPage = page.currentPage ?? 1;
 // const allTags = await findTags();
 
 const metadata = {
-  title: `Plein Air Art Blog${currentPage > 1 ? ` — Page ${currentPage}` : ' — Articles & Tips for Outdoor Artists'}`,
-  description: 'Discover articles about plein air painting techniques, outdoor art history, en plein air artist spotlights, and community events for plein air sketchers worldwide.',
+  title: `Plein Air & Urban Sketching Blog${currentPage > 1 ? ` — Page ${currentPage}` : ' — Outdoor Artists & Travel Sketchers'}`,
+  description: 'Articles for urban sketchers, plein air painters, outdoor artists, and travel sketchers — techniques, history, and community stories from the field.',
+  keywords: 'plein air, pleinair, urban sketchers, urban sketching, outdoor artist, travel sketcher, en plein air, outdoor painting',
   robots: {
     index: blogListRobots?.index && currentPage === 1,
     follow: blogListRobots?.follow,
@@ -41,14 +42,24 @@ const breadcrumbs = [
   { name: 'Home', url: String(getCanonical('/')) },
   { name: 'Blog', url: String(getCanonical(getBlogPermalink())) },
 ];
+
+const structuredData =
+  currentPage === 1
+    ? [
+        {
+          type: 'Blog' as const,
+          data: {},
+        },
+      ]
+    : [];
 ---
 
-<Layout metadata={metadata} breadcrumbs={breadcrumbs}>
+<Layout metadata={metadata} breadcrumbs={breadcrumbs} structuredData={structuredData}>
   <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
     <Headline
-      subtitle="Articles and resources for plein air sketchers and outdoor artists."
+      subtitle="Articles for urban sketchers, plein air painters, outdoor artists, and travel sketchers."
     >
-      Plein Air Art Blog & Resources for Outdoor Artists
+      Plein Air, Urban Sketching & Outdoor Art Blog
     </Headline>
     <BlogList posts={page.data} />
     <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />

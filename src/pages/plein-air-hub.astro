@@ -9,9 +9,11 @@ import pleinAirBooks from '~/assets/images/plein-air-books.jpeg';
 import { getCanonical, getPermalink } from '~/utils/permalinks';
 
 const metadata = {
-  title: 'Plein Air Hub - Resources & Community for Outdoor Artists',
-  description: 'Helpful plein air painting resources and tips. Connect with outdoor artists worldwide and discover new painting locations. A growing community for en plein air enthusiasts.',
-  keywords: 'plein air hub, outdoor art guide, en plein air techniques, outdoor artists community, plein air supplies, landscape painting, plein air locations, outdoor sketching',
+  title: 'Plein Air Painting Hub for Outdoor Artists | Sketch Nomad',
+  description:
+    'Plein air (pleinair / en plein air) resources for outdoor artists: gear, light, composition, and a community of landscape painters and sketchers who work outdoors.',
+  keywords:
+    'plein air, pleinair, en plein air, plein air painting, outdoor artist, outdoor artists, outdoor painting, landscape painting, plein air sketching',
   ignoreTitleTemplate: true,
 };
 
@@ -25,9 +27,20 @@ const breadcrumbs = [
   <!-- Hero: Welcome to the Hub -->
   <HeroText
     tagline="Plein Air Hub"
-    title="Your Outdoor Art Sanctuary"
-    subtitle="A quiet corner for artists who find their canvas in the open air. Here, we share simple tips, celebrate the creative process, and connect with a community that understands the joy of painting under the sky."
+    title="Plein Air Painting for Outdoor Artists"
+    subtitle="Tips, gear, and community for plein air — also written pleinair or en plein air — the practice of painting and sketching outdoors, from life."
   />
+
+  <section class="px-6 mx-auto max-w-3xl">
+    <div class="prose prose-lg dark:prose-invert mx-auto text-muted">
+      <p>
+        Plein air painting is simply making art outside: in a park, on a hillside, at a harbour, or on a city street.
+        Outdoor artists chase changing light, pack a compact kit, and finish (or at least start) the work on location.
+        Sketch Nomad is a companion for that practice — a place to tag each piece to a GPS spot, keep field notes, and
+        find other pleinair painters nearby.
+      </p>
+    </div>
+  </section>
 
   <!-- Getting Started Section -->
   <Content
@@ -234,7 +247,7 @@ const breadcrumbs = [
     </Fragment>
 
     <Fragment slot="subtitle">
-      Join our community on Sketch Nomad to discover inspiring locations, document your art, and connect with fellow plein air enthusiasts. It's free to get started.
+      Join Sketch Nomad to map your plein air spots, document your work, and connect with outdoor artists. It is free to get started.
     </Fragment>
   </CallToAction>
 </Layout>

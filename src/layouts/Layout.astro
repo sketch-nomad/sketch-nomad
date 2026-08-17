@@ -42,6 +42,10 @@ const isHome = Astro.url.pathname === '/';
         <>
           <StructuredData type="WebSite" />
           <StructuredData type="Organization" />
+          <StructuredData type="SoftwareApplication" />
+          {structuredData.map(({ type, data }) => (
+            <StructuredData type={type} data={data} />
+          ))}
         </>
       ) : (
         structuredData.map(({ type, data }) => <StructuredData type={type} data={data} />)

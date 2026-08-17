@@ -44,6 +44,18 @@ export default defineConfig({
           !path.match(/\/\d+\/$/)
         );
       },
+      serialize(item) {
+        const path = new URL(item.url).pathname;
+        const highIntent: Record<string, number> = {
+          '/': 1.0,
+          '/plein-air-hub/': 0.9,
+          '/blog/': 0.8,
+          '/urban-sketchers/': 0.8,
+          '/plein-air-history/': 0.8,
+        };
+        item.priority = highIntent[path] ?? item.priority ?? 0.7;
+        return item;
+      },
     }),
     mdx(),
     icon({

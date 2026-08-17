@@ -2,21 +2,75 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 import FeatureCards from '~/components/widgets/FeatureCards.astro';
+import Features from '~/components/widgets/Features.astro';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
+import { getPermalink } from '~/utils/permalinks';
+
+const faqs = [
+  {
+    title: 'What is Sketch Nomad?',
+    description:
+      'Sketch Nomad is a free platform for urban sketchers, plein air painters, outdoor artists, and travel sketchers. Tag your artwork to a place, keep a map of your sketching spots, and connect with a worldwide outdoor-art community.',
+  },
+  {
+    title: 'What is plein air (or pleinair) painting?',
+    description:
+      'Plein air — also written pleinair or en plein air — means painting or sketching outdoors, from life. Sketch Nomad is built for that practice: location-tagged sketches, discovery maps, and sketch-together sessions in the field.',
+  },
+  {
+    title: 'Is Sketch Nomad for urban sketchers?',
+    description:
+      'Yes. Urban sketchers who draw cities, streets, and daily life on location can pin sketches to the exact spot, find fellow sketchers nearby, and join sketch-together sessions.',
+  },
+  {
+    title: 'Can travel sketchers use it?',
+    description:
+      'Travel sketchers can log sketches from trains, cafés, trails, and cities they visit, then look back at a map of every place they drew. It is a visual travel journal as much as a community.',
+  },
+  {
+    title: 'Is this for professional outdoor artists only?',
+    description:
+      "Not at all. Sketch Nomad is for every outdoor artist — seasoned plein air painters, weekend hobbyists, urban sketchers, nature journalers, and anyone just starting.",
+  },
+  {
+    title: 'How does location tagging work?',
+    description:
+      'When you upload a piece, you can attach the GPS location where you created it. That builds a personal map of your spots and, if you choose, helps other artists discover new places to paint or sketch.',
+  },
+  {
+    title: 'What is your stance on AI and artist data?',
+    description:
+      'Your art and data are yours, period. We will never use your artwork to train AI models. We are committed to being a trusted, private space for artists to share their work without worry.',
+  },
+  {
+    title: 'Is Sketch Nomad free?',
+    description:
+      'Yes. The web app is free to use. We plan to always offer a free version so outdoor artists can create without a financial barrier.',
+  },
+];
 
 const metadata = {
-  title: 'Sketch Nomad – Connect with Outdoor Artists Worldwide',
+  title: 'Sketch Nomad – Urban Sketchers, Plein Air & Outdoor Artists',
   description:
-    'Join Sketch Nomad, the platform for outdoor artists. Share location-tagged artwork, discover scenic painting spots, and connect with fellow artists worldwide.',
+    'A community for urban sketchers, plein air painters, outdoor artists, and travel sketchers. Tag sketches to a place, find pleinair spots, and connect worldwide.',
   keywords:
-    'outdoor art, plein air, sketch nomad, landscape painting, nature sketching, urban sketching, art community',
+    'urban sketchers, urban sketching, plein air, pleinair, en plein air, outdoor artist, outdoor artists, travel sketcher, travel sketching, plein air painting, outdoor sketching',
   ignoreTitleTemplate: true,
 };
+
+const structuredData = [
+  {
+    type: 'FAQPage' as const,
+    data: {
+      questions: faqs.map(({ title, description }) => ({ question: title, answer: description })),
+    },
+  },
+];
 ---
 
-<Layout metadata={metadata}>
+<Layout metadata={metadata} structuredData={structuredData}>
   <!-- Hero Widget ******************* -->
 
   <Hero2
@@ -70,15 +124,52 @@ const metadata = {
       <span class="text-2xl sm:text-3xl lg:text-4xl text-muted font-normal">
         The platform for <span id="animated-text" class="text-primary font-bold">Urban Sketchers</span>
       </span>
+      <span class="sr-only">
+        urban sketchers, plein air painters, outdoor artists, travel sketchers, and nature journalers
+      </span>
     </Fragment>
 
     <Fragment slot="subtitle">
-      <span class="hidden sm:inline">
-        Track your plein air adventures and connect with outdoor artists worldwide.
-      </span>
-      Share location-tagged artwork and discover scenic spots with a global community of sketch nomads.
+      Track plein air and pleinair adventures, pin urban sketches to a street corner, and keep a map of every place a
+      travel sketcher draws. Share location-tagged artwork with outdoor artists worldwide.
     </Fragment>
   </Hero2>
+
+  <Features
+    id="who-its-for"
+    tagline="Who it's for"
+    title="Built for Artists Who Work Outdoors"
+    subtitle="Whether you sketch cities, paint landscapes, or draw on the road, Sketch Nomad is a home for your outdoor practice."
+    columns={2}
+    items={[
+      {
+        title: 'Urban Sketchers',
+        description:
+          'Draw streets, cafés, and city life on location. Pin each urban sketch to the spot and find sketch-together sessions nearby.',
+        icon: 'tabler:building',
+      },
+      {
+        title: 'Plein Air Painters',
+        description:
+          'Capture light in the open air. Discover pleinair painting spots, log field notes, and meet other outdoor painters.',
+        icon: 'tabler:palette',
+        callToAction: { text: 'Plein air hub', href: getPermalink('/plein-air-hub') },
+      },
+      {
+        title: 'Outdoor Artists',
+        description:
+          'From landscape painters to nature journalers — a quiet community for anyone who creates outside the studio.',
+        icon: 'tabler:sun',
+        callToAction: { text: 'Plein air resources', href: getPermalink('/plein-air-hub') },
+      },
+      {
+        title: 'Travel Sketchers',
+        description:
+          'Turn every trip into a visual journal. Tag sketches to cities, trails, and landmarks as you go.',
+        icon: 'tabler:plane',
+      },
+    ]}
+  />
 
   <!-- Features Widget *************** -->
   <FeatureCards
@@ -151,42 +242,9 @@ const metadata = {
     subtitle="Here are some answers to questions we often hear. If you have others, please feel free to reach out."
     tagline="FAQs"
     classes={{ container: 'max-w-6xl' }}
-    items={[
-      {
-      title: 'What is Sketch Nomad?',
-      description:
-        "It's a simple, quiet place for outdoor artists to document their work and connect with others. We wanted to create a tool to help you build a personal map of your art journey and, if you wish, share it with a like-minded community.",
-      },
-      {
-      title: 'Is this for professional artists only?',
-      description:
-        'Not at all. Sketch Nomad is for everyone who enjoys creating art outdoors, whether you\'re a seasoned professional, a weekend hobbyist, or just starting your journey. We celebrate the act of creation itself.',
-      },
-      {
-      title: 'How does location tagging work?',
-      description:
-        "When you upload a piece of art, you can attach the GPS location where you created it. This helps you keep a beautiful, personal map of your spots. If you choose, it also helps other artists in the community discover new places to paint.",
-      },
-      {
-      title: 'What is your stance on AI and artist data?',
-      description:
-        "Your art and data are yours, period. We will never use your artwork to train AI models. We are committed to being a trusted, private space for artists to share their work without worry.",
-      },
-      {
-      title: 'Is Sketch Nomad free?',
-      description:
-        'Yes. Our goal is to support the outdoor art community, and we plan to always offer a free version of Sketch Nomad. We believe in fostering a creative space without financial barriers.',
-      },
-      {
-      title: 'When can I use the app?',
-      description:
-        "We're taking our time to build Sketch Nomad thoughtfully and are targeting a release in Q3 2025. If you join our waitlist, we'll send you a quiet note as soon as it's ready for you to explore. We appreciate your patience.",
-      },
-    ]}
+    items={faqs}
   />
 </Layout>
-
-
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -194,6 +252,7 @@ const metadata = {
       'Nature Journalers',
       'Outdoor Artists',
       'Plein Air Painters',
+      'Travel Sketchers',
       'Sketch Nomads',
       'Urban Sketchers',
     ];
