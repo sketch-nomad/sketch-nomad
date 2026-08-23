@@ -168,6 +168,8 @@ const getStyle = ({
     styleEntries.push(['aspect-ratio', aspectRatio ? `${aspectRatio}` : undefined]);
   }
   if (layout === 'cover') {
+    styleEntries.push(['width', '100%']);
+    styleEntries.push(['height', '100%']);
     styleEntries.push(['max-width', '100%']);
     styleEntries.push(['max-height', '100%']);
   }

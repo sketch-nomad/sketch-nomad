@@ -20,19 +20,18 @@ const link = APP_BLOG?.post?.isEnabled ? getPermalink(post.permalink, 'post') : 
 <article
   class="mb-6 transition intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade"
 >
-  <div class="relative md:h-64 bg-gray-400 dark:bg-slate-700 rounded shadow-lg mb-6">
+  <div class="relative w-full h-48 sm:h-56 md:h-64 overflow-hidden bg-gray-400 dark:bg-slate-700 rounded shadow-lg mb-6">
     {
       image &&
         (link ? (
-          <a href={link}>
+          <a class="block w-full h-full" href={link}>
             <Image
               src={image}
-              class="w-full md:h-full rounded shadow-lg bg-gray-400 dark:bg-slate-700"
+              class="w-full h-full object-cover"
               widths={[400, 600]}
-              width={400}
+              width={600}
               sizes="(min-width: 1024px) 300px, (min-width: 768px) 350px, 400px"
               alt={post.title}
-              aspectRatio="16:9"
               layout="cover"
               loading="lazy"
               decoding="async"
@@ -41,12 +40,11 @@ const link = APP_BLOG?.post?.isEnabled ? getPermalink(post.permalink, 'post') : 
         ) : (
           <Image
             src={image}
-            class="w-full md:h-full rounded shadow-lg bg-gray-400 dark:bg-slate-700"
+            class="w-full h-full object-cover"
             widths={[400, 600]}
-            width={400}
+            width={600}
             sizes="(min-width: 1024px) 300px, (min-width: 768px) 350px, 400px"
             alt={post.title}
-            aspectRatio="16:9"
             layout="cover"
             loading="lazy"
             decoding="async"
