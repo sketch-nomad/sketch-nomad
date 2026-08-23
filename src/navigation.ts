@@ -40,6 +40,7 @@ export const footerData = {
       links: [
         { text: 'Roadmap', href: getPermalink('/roadmap') },
         { text: 'Changelog', href: getPermalink('/changelog') },
+        { text: 'GitHub', href: 'https://github.com/sketch-nomad', target: '_blank' },
       ],
     },
     {
@@ -62,9 +63,11 @@ export const footerData = {
   ],
   socialLinks: [
     { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/sketch.nomad/' },
+    { ariaLabel: 'GitHub', icon: 'tabler:brand-github', href: 'https://github.com/sketch-nomad' },
+    { ariaLabel: 'LinkedIn', icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/company/sketch-nomad/' },
     { ariaLabel: 'Reddit', icon: 'tabler:brand-reddit', href: 'https://www.reddit.com/r/SketchNomad/' },
   ],
   footNote: `
-    © 2025 Sketch Nomad · Contact: <a class="text-primary underline" href="mailto:info@sketchnomad.com">info@sketchnomad.com</a> · All rights reserved.
+    © 2026 Sketch Nomad · Contact: <a class="text-primary underline" href="mailto:info@sketchnomad.com">info@sketchnomad.com</a> · All rights reserved.
   `,
 };
