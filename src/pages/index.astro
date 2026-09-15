@@ -2,11 +2,9 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 import FeatureCards from '~/components/widgets/FeatureCards.astro';
-import Features from '~/components/widgets/Features.astro';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
-import { getPermalink } from '~/utils/permalinks';
 
 const faqs = [
   {
@@ -130,53 +128,16 @@ const structuredData = [
     </Fragment>
 
     <Fragment slot="subtitle">
-      Pin each sketch to the place you drew it, and keep a map of every street, trail, and café you've worked outdoors.
-      Then share it with artists around the world.
+      Keep a map of the places you draw. See the work other artists have made there. Heading out to sketch? Put an open invitation on the map and let people join you.
     </Fragment>
   </Hero2>
-
-  <Features
-    id="who-its-for"
-    tagline="Who it's for"
-    title="Built for Artists Who Work Outdoors"
-    subtitle="Whether you sketch cities, paint landscapes, or draw on the road, Sketch Nomad is a home for your outdoor practice."
-    columns={2}
-    items={[
-      {
-        title: 'Urban Sketchers',
-        description:
-          'Draw streets, cafés, and city life on location. Pin each urban sketch to the spot and find sketch-together sessions nearby.',
-        icon: 'tabler:building',
-      },
-      {
-        title: 'Plein Air Painters',
-        description:
-          'Capture light in the open air. Discover pleinair painting spots, log field notes, and meet other outdoor painters.',
-        icon: 'tabler:palette',
-        callToAction: { text: 'Plein air hub', href: getPermalink('/plein-air-hub') },
-      },
-      {
-        title: 'Outdoor Artists',
-        description:
-          'From landscape painters to nature journalers — a quiet community for anyone who creates outside the studio.',
-        icon: 'tabler:sun',
-        callToAction: { text: 'Plein air resources', href: getPermalink('/plein-air-hub') },
-      },
-      {
-        title: 'Travel Sketchers',
-        description:
-          'Turn every trip into a visual journal. Tag sketches to cities, trails, and landmarks as you go.',
-        icon: 'tabler:plane',
-      },
-    ]}
-  />
 
   <!-- Features Widget *************** -->
   <FeatureCards
     id="features"
     tagline="What's in the sketchbook"
-    title="What's Here Now & What's Coming Next"
-    subtitle="Explore our current features and get excited about the innovative tools we're building for the outdoor art community."
+    title="A Map Made by Artists"
+    subtitle="Your drawings, work made by other artists, and open sketch invitations all live in the same places."
     classes={{ container: 'max-w-6xl' }}
     items={[
       {
@@ -187,11 +148,11 @@ const structuredData = [
         icon: 'tabler:map-pin',
       },
       {
-        category: 'Community',
-        title: 'Global Artist Community',
+        category: 'Sketch together',
+        title: 'Open Sketch Invitations',
         description:
-          'Share your outdoor sketches and paintings with artists worldwide, and explore stunning artwork from creators across the globe.',
-        icon: 'tabler:photo',
+          'Choose a place and time, then leave an open invitation for anyone nearby who wants to draw alongside you. No club or organiser required.',
+        icon: 'tabler:users-group',
       },
       {
         category: 'Discovery',
@@ -202,10 +163,10 @@ const structuredData = [
       },
       {
         category: 'Community',
-        title: 'Sketch Together Sessions',
+        title: 'Artists on the Map',
         description:
-          'Host or join live plein air sketch sessions with fellow artists — set a time and place, then create side by side with sketch nomads near you.',
-        icon: 'tabler:users-group',
+          'Share your outdoor sketches and paintings with artists worldwide, and explore work made in places you know or want to visit.',
+        icon: 'tabler:photo',
       },
       {
         category: 'Roadmap',
@@ -230,10 +191,7 @@ const structuredData = [
 
   <BlogLatestPosts
     title="Discover the World of Outdoor Art"
-    information={`Explore our blog featuring art history, artist spotlights, and community events.
-          Learn about painting traditions, discover works from renowned outdoor artists,
-          and find featured sketches from breathtaking locations worldwide.
-        `}
+    information="Stories about artists, places, and the long tradition of making work outdoors."
   />
 
   <!-- FAQs Widget ******************* -->
