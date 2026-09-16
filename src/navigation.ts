@@ -65,7 +65,8 @@ export const footerData = {
     { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/sketch.nomad/' },
     { ariaLabel: 'GitHub', icon: 'tabler:brand-github', href: 'https://github.com/sketch-nomad' },
     { ariaLabel: 'LinkedIn', icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/company/sketch-nomad/' },
-    { ariaLabel: 'Reddit', icon: 'tabler:brand-reddit', href: 'https://www.reddit.com/r/SketchNomad/' },
+    { ariaLabel: 'YouTube', icon: 'tabler:brand-youtube', href: 'https://www.youtube.com/@sketch-nomad' },
+    { ariaLabel: 'Pinterest', icon: 'tabler:brand-pinterest', href: 'https://www.pinterest.com/sketchnomad' },
   ],
   footNote: `
     © 2026 Sketch Nomad · Contact: <a class="text-primary underline" href="mailto:info@sketchnomad.com">info@sketchnomad.com</a> · All rights reserved.

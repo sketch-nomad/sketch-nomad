@@ -5,6 +5,7 @@ import FeatureCards from '~/components/widgets/FeatureCards.astro';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Hero2 from '~/components/widgets/Hero2.astro';
+import RotatingRoles from '~/components/widgets/RotatingRoles.astro';
 
 const faqs = [
   {
@@ -120,7 +121,7 @@ const structuredData = [
     <Fragment slot="title">
       <br class="p-0 m-0 sm:hidden" />
       <span class="text-2xl sm:text-3xl lg:text-4xl text-muted font-normal">
-        The platform for <span id="animated-text" class="text-primary font-bold">Urban Sketchers</span>
+        The platform for <RotatingRoles />
       </span>
       <span class="sr-only">
         urban sketchers, plein air painters, outdoor artists, travel sketchers, and nature journalers
@@ -203,52 +204,3 @@ const structuredData = [
     items={faqs}
   />
 </Layout>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const artistTypes = [
-      'Nature Journalers',
-      'Outdoor Artists',
-      'Plein Air Painters',
-      'Travel Sketchers',
-      'Sketch Nomads',
-      'Urban Sketchers',
-    ];
-
-    let currentIndex = 0;
-    const textElement = document.getElementById('animated-text');
-
-    if (!textElement) {
-      console.error('Animated text element not found');
-      return;
-    }
-
-    function changeText() {
-      if (!textElement) return;
-
-      // Fade out
-      textElement.style.opacity = '0';
-      textElement.style.transform = 'translateY(10px)';
-
-      setTimeout(() => {
-        if (!textElement) return;
-
-        // Change text
-        currentIndex = (currentIndex + 1) % artistTypes.length;
-        textElement.textContent = artistTypes[currentIndex];
-
-        // Fade in
-        textElement.style.opacity = '1';
-        textElement.style.transform = 'translateY(0)';
-      }, 300);
-    }
-
-    // Add CSS for smooth transitions
-    textElement.style.transition = 'all 0.3s ease-in-out';
-
-    // Start animation after initial delay
-    setTimeout(() => {
-      setInterval(changeText, 2500);
-    }, 2000);
-  });
-</script>

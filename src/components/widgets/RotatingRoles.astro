@@ -1,0 +1,280 @@
+---
+const roles = [
+  'Urban Sketchers',
+  'Nature Journalers',
+  'Outdoor Artists',
+  'Plein Air Painters',
+  'Travel Sketchers',
+  'Sketch Nomads',
+];
+
+const initialWords = roles[0].split(' ');
+---
+
+<span
+  class="role-ticker text-primary font-bold"
+  data-role-ticker
+  data-roles={JSON.stringify(roles)}
+  aria-hidden="true"
+  transition:animate="none"
+>
+  {
+    initialWords.map((word) => (
+      <span class="role-word">
+        <span class="role-word__sizer">{word}</span>
+        <span class="role-word__clip">
+          <span class="role-word__text">{word}</span>
+        </span>
+      </span>
+    ))
+  }
+</span>
+
+<style is:global>
+  .role-ticker {
+    display: inline-flex;
+    gap: 0.3em;
+    align-items: baseline;
+    vertical-align: baseline;
+  }
+
+  .role-word {
+    position: relative;
+    display: block;
+  }
+
+  .role-word__sizer {
+    visibility: hidden;
+    display: block;
+    white-space: nowrap;
+  }
+
+  .role-word__clip {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .role-word__text {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .role-word__text.is-out {
+    position: absolute;
+    inset: 0;
+  }
+
+  .role-word.is-rolling .role-word__text.is-out {
+    animation: role-slide-out 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  .role-word.is-rolling .role-word__text.is-in {
+    animation: role-slide-in 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  @keyframes role-slide-out {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes role-slide-in {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .role-word.is-rolling .role-word__text.is-out,
+    .role-word.is-rolling .role-word__text.is-in {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const HOLD_MS = 2200;
+  const STAGGER_MS = 140;
+  const ROLL_MS = 500;
+
+  let holdId = 0;
+  let currentIndex = 0;
+  let rolling = false;
+  let generation = 0;
+
+  const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const stopRoleTicker = () => {
+    window.clearTimeout(holdId);
+    holdId = 0;
+    rolling = false;
+    generation += 1;
+  };
+
+  const createText = (word: string, extraClass = '') => {
+    const span = document.createElement('span');
+    span.className = extraClass ? `role-word__text ${extraClass}` : 'role-word__text';
+    span.textContent = word;
+    return span;
+  };
+
+  const createWord = (word: string) => {
+    const slot = document.createElement('span');
+    slot.className = 'role-word';
+    const sizer = document.createElement('span');
+    sizer.className = 'role-word__sizer';
+    sizer.textContent = word;
+    const clip = document.createElement('span');
+    clip.className = 'role-word__clip';
+    clip.appendChild(createText(word));
+    slot.append(sizer, clip);
+    return slot;
+  };
+
+  const wordOf = (slot: HTMLElement) => {
+    const sizer = slot.querySelector('.role-word__sizer');
+    if (sizer?.textContent) return sizer.textContent;
+    const current = slot.querySelector('.role-word__text.is-in, .role-word__text:not(.is-out)');
+    return current?.textContent ?? '';
+  };
+
+  const settleWord = (slot: HTMLElement, word: string) => {
+    slot.classList.remove('is-rolling');
+    const sizer = slot.querySelector('.role-word__sizer');
+    const clip = slot.querySelector('.role-word__clip');
+    if (sizer) sizer.textContent = word;
+    if (clip) clip.replaceChildren(createText(word));
+  };
+
+  const rollWord = (slot: HTMLElement, nextWord: string, delayMs: number) => {
+    if (wordOf(slot) === nextWord) {
+      settleWord(slot, nextWord);
+      return Promise.resolve();
+    }
+
+    if (prefersReducedMotion()) {
+      settleWord(slot, nextWord);
+      return Promise.resolve();
+    }
+
+    const outgoing = createText(wordOf(slot), 'is-out');
+    const incoming = createText(nextWord, 'is-in');
+    outgoing.style.animationDelay = `${delayMs}ms`;
+    incoming.style.animationDelay = `${delayMs}ms`;
+
+    const sizer = slot.querySelector('.role-word__sizer');
+    const clip = slot.querySelector('.role-word__clip');
+    if (sizer) sizer.textContent = nextWord;
+    if (clip) clip.replaceChildren(incoming, outgoing);
+    slot.classList.add('is-rolling');
+
+    return new Promise<void>((resolve) => {
+      let settled = false;
+      const finish = () => {
+        if (settled) return;
+        settled = true;
+        settleWord(slot, nextWord);
+        resolve();
+      };
+
+      incoming.addEventListener('animationend', finish, { once: true });
+      window.setTimeout(finish, delayMs + ROLL_MS + 80);
+    });
+  };
+
+  const bootRoleTicker = () => {
+    stopRoleTicker();
+    const gen = generation;
+
+    const root = document.querySelector<HTMLElement>('[data-role-ticker]');
+    if (!root) return;
+
+    let roles: string[] = [];
+    try {
+      roles = JSON.parse(root.dataset.roles || '[]') as string[];
+    } catch {
+      return;
+    }
+    if (!roles.length) return;
+
+    currentIndex = Math.max(
+      0,
+      roles.findIndex((role) => role === 'Urban Sketchers')
+    );
+
+    const syncWords = (text: string) => {
+      const words = text.split(' ');
+      const slots = Array.from(root.querySelectorAll<HTMLElement>('.role-word'));
+      while (slots.length < words.length) {
+        const slot = createWord(words[slots.length] ?? '');
+        root.appendChild(slot);
+        slots.push(slot);
+      }
+      while (slots.length > words.length) {
+        slots.pop()?.remove();
+      }
+      slots.forEach((slot, i) => settleWord(slot, words[i] ?? ''));
+      return slots;
+    };
+
+    const alive = () => gen === generation && document.querySelector('[data-role-ticker]');
+
+    const schedule = () => {
+      if (!alive()) return;
+      window.clearTimeout(holdId);
+      holdId = window.setTimeout(tick, HOLD_MS);
+    };
+
+    const tick = () => {
+      if (!alive()) return;
+      if (document.hidden || rolling) {
+        schedule();
+        return;
+      }
+
+      const nextIndex = (currentIndex + 1) % roles.length;
+      const fromWords = roles[currentIndex].split(' ');
+      const toWords = roles[nextIndex].split(' ');
+      const count = Math.max(fromWords.length, toWords.length);
+
+      while (root.querySelectorAll('.role-word').length < count) {
+        root.appendChild(createWord(''));
+      }
+
+      const slots = Array.from(root.querySelectorAll<HTMLElement>('.role-word'));
+      rolling = true;
+
+      const flips = slots.map((slot, i) => {
+        const nextWord = toWords[i];
+        const delay = i * STAGGER_MS;
+        if (nextWord == null) {
+          return rollWord(slot, '', delay).then(() => {
+            if (alive()) slot.remove();
+          });
+        }
+        return rollWord(slot, nextWord, delay);
+      });
+
+      Promise.all(flips).then(() => {
+        if (!alive()) return;
+        currentIndex = nextIndex;
+        rolling = false;
+        syncWords(roles[currentIndex]);
+        schedule();
+      });
+    };
+
+    schedule();
+  };
+
+  document.addEventListener('astro:page-load', bootRoleTicker);
+  document.addEventListener('astro:before-swap', stopRoleTicker);
+  bootRoleTicker();
+</script>
