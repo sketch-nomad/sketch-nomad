@@ -1,0 +1,67 @@
+---
+import '@fontsource-variable/overpass';
+---
+
+<style is:inline>
+  :root {
+    --aw-font-sans: 'Overpass Variable';
+    --aw-font-serif: 'Overpass Variable';
+    --aw-font-heading: 'Overpass Variable';
+    --aw-font-mono: 'Overpass Variable';
+
+    /* Channel triplets (no rgb() wrapper) so Tailwind's <alpha-value> opacity modifiers work.
+       Neutrals and emerald follow sketchnomad.app. */
+    --aw-color-primary: 4 120 87;
+    /* Emerald, dark enough for text and white-on-fill */
+    --aw-color-secondary: 6 95 70;
+    --aw-color-accent: 4 120 87;
+
+    --aw-color-text-heading: 23 23 26;
+    --aw-color-text-default: 42 42 46;
+    --aw-color-text-muted: rgb(23 23 26 / 70%);
+    --aw-color-bg-page: 242 242 243;
+    /* App light grey */
+    --aw-color-surface: 255 255 255;
+    --aw-color-border: rgb(23 23 26 / 12%);
+
+    --aw-color-bg-page-dark: 26 26 28;
+
+    /* The map's own ground, the same in both themes */
+    --space: 7 9 12;
+    --globe-light: 242 248 244;
+    --globe-mid: 157 189 170;
+    --globe-dark: 111 149 130;
+    --mint: 16 185 129;
+
+    /* Frosted panel: light glass in light theme */
+    --glass-bg: rgb(250 250 250);
+    --glass-fg: 23 23 26;
+    --glass-muted: rgb(23 23 26 / 70%);
+    --action-bg: 4 120 87;
+    --action-fg: 255 255 255;
+  }
+
+  .dark {
+    --aw-color-primary: 52 211 153;
+    --aw-color-secondary: 110 231 183;
+    --aw-color-accent: 52 211 153;
+
+    --aw-color-text-heading: 242 242 243;
+    --aw-color-text-default: 226 226 229;
+    --aw-color-text-muted: rgb(226 226 229 / 74%);
+    --aw-color-bg-page: 26 26 28;
+    /* App dark grey */
+    --aw-color-surface: 42 42 46;
+    --aw-color-border: rgb(242 242 243 / 14%);
+
+    --glass-bg: rgb(26 26 30);
+    --glass-fg: 242 242 243;
+    --glass-muted: rgb(226 226 229 / 74%);
+    --action-bg: 16 185 129;
+    --action-fg: 4 39 27;
+  }
+
+  ::selection {
+    background-color: rgb(16 185 129 / 35%);
+  }
+</style>

@@ -1,0 +1,88 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Features from '~/components/widgets/Features.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import { getCanonical, getPermalink } from '~/utils/permalinks';
+
+const metadata = {
+  title: 'Plein Air, on the Map | Sketch Nomad',
+  description:
+    'Sketch Nomad connects plein air work to the places it was made: keep your field record, see how artists have worked a place, and open a sketch invitation.',
+  keywords:
+    'plein air, pleinair, en plein air, plein air painting, outdoor artist, outdoor artists, outdoor painting, landscape painting, plein air sketching',
+  ignoreTitleTemplate: true,
+};
+
+const breadcrumbs = [
+  { name: 'Home', url: String(getCanonical('/')) },
+  { name: 'Plein Air, on the Map', url: String(getCanonical(getPermalink('/plein-air-hub'))) },
+];
+---
+
+<Layout metadata={metadata} breadcrumbs={breadcrumbs}>
+  <HeroText
+    tagline="Plein air, on the map"
+    title="Plein Air, on the Map"
+    subtitle="Sketch Nomad connects work made outdoors to the places it was made—so you can keep your own record, see how others have worked a place, and invite people to sketch alongside you."
+  />
+
+  <section class="px-6 mx-auto max-w-3xl">
+    <div class="prose prose-lg dark:prose-invert mx-auto text-muted">
+      <p>
+        Plein air means making work outside, from life: at a harbour, in a park, on a hillside, or on a city street.
+        The weather changes. The light moves. The place becomes part of the work. Sketch Nomad is built to keep that
+        connection visible.
+      </p>
+    </div>
+  </section>
+
+  <Features
+    tagline="What the map holds"
+    title="The Place Is Part of the Work"
+    subtitle="A sketch is more useful when you can return to where it began—and see what other artists found there too."
+    items={[
+      {
+        title: 'Your Field Record',
+        description: 'Pin your work to where you made it and build a map of the places you have drawn over time.',
+        icon: 'tabler:map-pin',
+      },
+      {
+        title: 'A Place Through Artists’ Eyes',
+        description: 'See sketches and historical works connected to a place before you decide to set up there yourself.',
+        icon: 'tabler:photo',
+      },
+      {
+        title: 'Open Sketch Invitations',
+        description: 'Choose a place and time, then leave an open invitation for anyone nearby who wants to draw alongside you.',
+        icon: 'tabler:users-group',
+      },
+    ]}
+  />
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Explore the App',
+        href: 'https://sketchnomad.app',
+        target: '_blank',
+        icon: 'tabler:palette',
+      },
+      {
+        variant: 'secondary',
+        text: 'About Sketch Nomad',
+        href: '/about',
+        icon: 'tabler:map',
+      },
+    ]}
+  >
+    <Fragment slot="title">
+      Take Your Sketchbook Outside
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Make a map of the places you draw, see a place through other artists’ work, and put out an open invitation when you want company.
+    </Fragment>
+  </CallToAction>
+</Layout>

@@ -1,0 +1,28 @@
+---
+import { SITE } from '~/config';
+import Image from '~/components/common/Image.astro';
+import logoMark from '~/assets/images/logo-mark.webp';
+
+interface Props {
+  /** On a dark or green field: draw the mark and name in white. */
+  onDark?: boolean;
+}
+const { onDark = false } = Astro.props;
+---
+
+<span class="inline-flex items-center gap-2.5 self-center whitespace-nowrap">
+  <Image
+    src={logoMark}
+    alt=""
+    width={40}
+    height={40}
+    widths={[40, 80]}
+    layout="fixed"
+    loading="eager"
+    class:list={['logo-mark', onDark ? 'invert' : 'dark:invert']}
+  />
+  <span
+    class="font-heading text-[1.35rem] font-extrabold leading-none tracking-[-0.02em]"
+    class:list={['logo-text', onDark ? 'text-white' : 'text-heading']}>{SITE?.name}</span
+  >
+</span>

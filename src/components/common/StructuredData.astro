@@ -1,0 +1,161 @@
+---
+export interface Props {
+  type?: 'WebSite' | 'Organization' | 'Article' | 'Blog' | 'BreadcrumbList' | 'FAQPage' | 'SoftwareApplication';
+  data?: Record<string, unknown>;
+}
+
+const { type = 'WebSite', data = {} } = Astro.props;
+
+const brandProfiles = [
+  'https://sketchnomad.app',
+  'https://www.instagram.com/sketch.nomad/',
+  'https://github.com/sketch-nomad',
+  'https://www.linkedin.com/company/sketch-nomad/',
+  'https://www.youtube.com/@sketch-nomad',
+  'https://www.pinterest.com/sketchnomad',
+];
+
+const knowsAbout = [
+  'Urban sketching',
+  'Urban sketchers',
+  'Plein air painting',
+  'Pleinair',
+  'En plein air',
+  'Outdoor artists',
+  'Travel sketching',
+  'Travel sketchers',
+];
+
+const baseSchema = {
+  '@context': 'https://schema.org',
+  '@type': type,
+};
+
+let schema = {};
+
+switch (type) {
+  case 'WebSite':
+    schema = {
+      ...baseSchema,
+      name: 'Sketch Nomad',
+      alternateName: ['SketchNomad', 'Sketch Nomad App'],
+      description:
+        'A community platform for urban sketchers, plein air painters, outdoor artists, and travel sketchers to share location-tagged artwork, discover pleinair spots, and sketch together.',
+      url: 'https://sketchnomad.com',
+      sameAs: brandProfiles,
+      publisher: {
+        '@type': 'Organization',
+        name: 'Sketch Nomad',
+      },
+      ...data,
+    };
+    break;
+
+  case 'Organization':
+    schema = {
+      ...baseSchema,
+      name: 'Sketch Nomad',
+      description:
+        'Sketch Nomad connects urban sketchers, plein air painters, outdoor artists, and travel sketchers through location-tagged sketches and a global outdoor-art community.',
+      url: 'https://sketchnomad.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://sketchnomad.com/logo.png',
+      },
+      sameAs: brandProfiles,
+      foundingDate: '2024',
+      knowsAbout,
+      ...data,
+    };
+    break;
+
+  case 'SoftwareApplication':
+    schema = {
+      ...baseSchema,
+      name: 'Sketch Nomad',
+      applicationCategory: 'DesignApplication',
+      operatingSystem: 'Web',
+      url: 'https://sketchnomad.app',
+      description:
+        'Web app for urban sketchers, plein air painters, outdoor artists, and travel sketchers to tag sketches to a place and find outdoor painting spots.',
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
+      ...data,
+    };
+    break;
+
+  case 'FAQPage':
+    schema = {
+      ...baseSchema,
+      mainEntity: ((data.questions as Array<{ question: string; answer: string }>) || []).map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
+    };
+    break;
+
+  case 'Article':
+    schema = {
+      ...baseSchema,
+      headline: data.title || '',
+      description: data.description || '',
+      author: {
+        '@type': 'Organization',
+        name: 'Sketch Nomad',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Sketch Nomad',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://sketchnomad.com/logo.png',
+        },
+      },
+      datePublished: data.publishDate || new Date().toISOString(),
+      dateModified: data.modifiedDate || data.publishDate || new Date().toISOString(),
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': data.url || '',
+      },
+      ...data,
+    };
+    break;
+
+  case 'Blog':
+    schema = {
+      ...baseSchema,
+      name: 'Sketch Nomad Blog',
+      description:
+        'Articles for urban sketchers, plein air painters, outdoor artists, and travel sketchers — history, techniques, and community stories.',
+      url: 'https://sketchnomad.com/blog',
+      publisher: {
+        '@type': 'Organization',
+        name: 'Sketch Nomad',
+      },
+      about: knowsAbout.map((name) => ({ '@type': 'Thing', name })),
+      ...data,
+    };
+    break;
+
+  case 'BreadcrumbList':
+    schema = {
+      ...baseSchema,
+      itemListElement: ((data.items as Array<{ name: string; url: string }>) || []).map((item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        item: item.url,
+      })),
+    };
+    break;
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)}></script>

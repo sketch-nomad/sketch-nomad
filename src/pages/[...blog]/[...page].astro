@@ -1,0 +1,71 @@
+---
+import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
+
+import Layout from '~/layouts/PageLayout.astro';
+import BlogList from '~/components/blog/List.astro';
+import Headline from '~/components/blog/Headline.astro';
+import Pagination from '~/components/blog/Pagination.astro';
+// import PostTags from "~/components/blog/Tags.astro";
+
+import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
+import { getCanonical, getBlogPermalink } from '~/utils/permalinks';
+
+export const prerender = true;
+
+export const getStaticPaths = (async ({ paginate }) => {
+  return await getStaticPathsBlogList({ paginate });
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { page } = Astro.props as Props;
+const currentPage = page.currentPage ?? 1;
+
+// const allCategories = await findCategories();
+// const allTags = await findTags();
+
+const metadata = {
+  title: `Plein Air & Urban Sketching Blog${currentPage > 1 ? ` — Page ${currentPage}` : ' — Outdoor Artists & Travel Sketchers'}`,
+  description: 'Articles for urban sketchers, plein air painters, outdoor artists, and travel sketchers — techniques, history, and community stories from the field.',
+  keywords: 'plein air, pleinair, urban sketchers, urban sketching, outdoor artist, travel sketcher, en plein air, outdoor painting',
+  robots: {
+    index: blogListRobots?.index && currentPage === 1,
+    follow: blogListRobots?.follow,
+  },
+  openGraph: {
+    type: 'blog',
+  },
+  ignoreTitleTemplate: true,
+};
+
+const breadcrumbs = [
+  { name: 'Home', url: String(getCanonical('/')) },
+  { name: 'Blog', url: String(getCanonical(getBlogPermalink())) },
+];
+
+const structuredData =
+  currentPage === 1
+    ? [
+        {
+          type: 'Blog' as const,
+          data: {},
+        },
+      ]
+    : [];
+---
+
+<Layout metadata={metadata} breadcrumbs={breadcrumbs} structuredData={structuredData}>
+  <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
+    <Headline
+      subtitle="Articles for urban sketchers, plein air painters, outdoor artists, and travel sketchers."
+    >
+      Plein Air, Urban Sketching & Outdoor Art Blog
+    </Headline>
+    <BlogList posts={page.data} />
+    <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+    <!--
+      <PostTags tags={allCategories} class="mb-2" title="Search by Categories:" isCategory />
+      <PostTags tags={allTags}  title="Search by Tags:" />
+    -->
+  </section>
+</Layout>

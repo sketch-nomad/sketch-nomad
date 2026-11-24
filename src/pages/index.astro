@@ -1,0 +1,170 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import FeatureCards from '~/components/widgets/FeatureCards.astro';
+import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+import FAQs from '~/components/widgets/FAQs.astro';
+import Hero2 from '~/components/widgets/Hero2.astro';
+import { globePaintings } from '~/data/globe-paintings';
+import RotatingRoles from '~/components/widgets/RotatingRoles.astro';
+
+const faqs = [
+  {
+    title: 'What is Sketch Nomad?',
+    description:
+      'Sketch Nomad is a free platform for urban sketchers, plein air painters, outdoor artists, and travel sketchers. Tag your artwork to a place, keep a map of your sketching spots, and connect with a worldwide outdoor-art community.',
+  },
+  {
+    title: 'What is plein air (or pleinair) painting?',
+    description:
+      'Plein air — also written pleinair or en plein air — means painting or sketching outdoors, from life. Sketch Nomad is built for that practice: location-tagged sketches, discovery maps, and sketch-together sessions in the field.',
+  },
+  {
+    title: 'Is Sketch Nomad for urban sketchers?',
+    description:
+      'Yes. Urban sketchers who draw cities, streets, and daily life on location can pin sketches to the exact spot, find fellow sketchers nearby, and join sketch-together sessions.',
+  },
+  {
+    title: 'Can travel sketchers use it?',
+    description:
+      'Travel sketchers can log sketches from trains, cafés, trails, and cities they visit, then look back at a map of every place they drew. It is a visual travel journal as much as a community.',
+  },
+  {
+    title: 'Is this for professional outdoor artists only?',
+    description:
+      'Not at all. Sketch Nomad is for every outdoor artist — seasoned plein air painters, weekend hobbyists, urban sketchers, nature journalers, and anyone just starting.',
+  },
+  {
+    title: 'How does location tagging work?',
+    description:
+      'When you upload a piece, you can attach the GPS location where you created it. That builds a personal map of your spots and, if you choose, helps other artists discover new places to paint or sketch.',
+  },
+  {
+    title: 'What is your stance on AI and artist data?',
+    description:
+      'Your art and data are yours, period. We will never use your artwork to train AI models. We are committed to being a trusted, private space for artists to share their work without worry.',
+  },
+  {
+    title: 'Is Sketch Nomad free?',
+    description:
+      'Yes. The web app is free to use. We plan to always offer a free version so outdoor artists can create without a financial barrier.',
+  },
+];
+
+const metadata = {
+  title: 'Sketch Nomad – Urban Sketchers, Plein Air & Outdoor Artists',
+  description:
+    'A community for urban sketchers, plein air painters, outdoor artists, and travel sketchers. Tag sketches to a place, find pleinair spots, and connect worldwide.',
+  keywords:
+    'urban sketchers, urban sketching, plein air, pleinair, en plein air, outdoor artist, outdoor artists, travel sketcher, travel sketching, plein air painting, outdoor sketching',
+  ignoreTitleTemplate: true,
+};
+
+const structuredData = [
+  {
+    type: 'FAQPage' as const,
+    data: {
+      questions: faqs.map(({ title, description }) => ({ question: title, answer: description })),
+    },
+  },
+];
+---
+
+<Layout metadata={metadata} structuredData={structuredData} darkHero>
+  <!-- Hero Widget ******************* -->
+
+  <Hero2
+    stamp="Free Web App · iOS & Android Coming Soon"
+    pins={globePaintings}
+    actions={[
+      {
+        variant: 'primary',
+        text: 'Open Web App',
+        href: 'https://sketchnomad.app',
+        target: '_blank',
+        icon: 'tabler:external-link',
+      },
+      {
+        variant: 'secondary',
+        text: 'Explore Features',
+        href: '#features',
+      },
+    ]}
+  >
+    <Fragment slot="title">Sketch Nomad</Fragment>
+
+    <Fragment slot="title">
+      <span
+        class="mt-4 flex flex-col whitespace-nowrap text-xl font-semibold leading-snug tracking-normal text-glass-muted sm:flex-row sm:items-baseline sm:gap-x-3 sm:text-2xl"
+      >
+        <span>The platform for</span>
+        <RotatingRoles />
+      </span>
+      <span class="sr-only">
+        urban sketchers, plein air painters, outdoor artists, travel sketchers, and nature journalers
+      </span>
+    </Fragment>
+
+    <Fragment slot="subtitle">
+      Keep a map of the places you draw. See the work other artists have made there. Heading out to sketch? Put an open
+      invitation on the map and let people join you.
+    </Fragment>
+  </Hero2>
+
+  <!-- Features Widget *************** -->
+  <FeatureCards
+    id="features"
+    title="A Map Made by Artists"
+    subtitle="Your drawings, work made by other artists, and open sketch invitations all live in the same places."
+    classes={{ container: 'max-w-6xl' }}
+    items={[
+      {
+        category: 'Location',
+        title: 'GPS Location Tagging',
+        description:
+          'Tag your artwork with precise GPS coordinates, helping fellow artists discover and visit the exact scenic locations where your masterpieces were created.',
+        icon: 'tabler:map-pin',
+      },
+      {
+        category: 'Sketch together',
+        title: 'Open Sketch Invitations',
+        description:
+          'Choose a place and time, then leave an open invitation for anyone nearby who wants to draw alongside you. No club or organiser required.',
+        icon: 'tabler:users-group',
+      },
+      {
+        category: 'Discovery',
+        title: 'Interactive Discovery Maps',
+        description:
+          'Find new painting locations through our interactive mapping system, perfect for artists seeking fresh inspiration and scenic spots.',
+        icon: 'tabler:map-2',
+      },
+      {
+        category: 'Community',
+        title: 'Artists on the Map',
+        description:
+          'Share your outdoor sketches and paintings with artists worldwide, and explore work made in places you know or want to visit.',
+        icon: 'tabler:photo',
+      },
+    ]}
+  >
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-surface/40 dark:bg-surface/20" aria-hidden="true"></div>
+    </Fragment>
+  </FeatureCards>
+  <!-- HighlightedPosts Widget ******* -->
+
+  <BlogLatestPosts
+    classes={{ container: 'max-w-6xl' }}
+    title="Discover the World of Outdoor Art"
+    information="Stories about artists, places, and the long tradition of making work outdoors."
+  />
+
+  <!-- FAQs Widget ******************* -->
+  <FAQs
+    title="A Few Common Questions"
+    subtitle="Here are some answers to questions we often hear. If you have others, please feel free to reach out."
+    classes={{ container: 'max-w-6xl' }}
+    items={faqs}
+  />
+</Layout>

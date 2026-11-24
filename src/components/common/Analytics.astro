@@ -1,0 +1,33 @@
+---
+import { ANALYTICS } from '~/config';
+
+const id = ANALYTICS.vendors.googleAnalytics.id;
+---
+
+{
+  id && (
+    <script is:inline define:vars={{ id }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        // gtag.js needs the real `arguments` object, not an array.
+        // eslint-disable-next-line prefer-rest-params
+        window.dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', id);
+
+      // Events queue in dataLayer, so gtag.js can wait until the page has loaded and the browser is idle:
+      // it is a 180 kB script that otherwise competes with the LCP image.
+      function loadGtag() {
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+        document.head.appendChild(s);
+      }
+      addEventListener('load', function () {
+        if ('requestIdleCallback' in window) requestIdleCallback(loadGtag, { timeout: 4000 });
+        else setTimeout(loadGtag, 2000);
+      });
+    </script>
+  )
+}

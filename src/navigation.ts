@@ -1,0 +1,73 @@
+import { getPermalink, getBlogPermalink } from './utils/permalinks';
+
+export const headerData = {
+  links: [
+    {
+      text: 'Plein Air Hub',
+      href: getPermalink('/plein-air-hub'),
+    },
+    {
+      text: 'Blog',
+      href: getBlogPermalink(),
+    },
+    {
+      text: 'About',
+      href: getPermalink('/about'),
+    },
+    {
+      text: 'Changelog',
+      href: getPermalink('/changelog'),
+    },
+    {
+      text: 'Contact',
+      href: getPermalink('/contact'),
+    },
+  ],
+  actions: [{ variant: 'primary' as const, text: 'Launch App', href: 'https://sketchnomad.app', target: '_blank' as const }],
+};
+
+export const footerData = {
+  links: [
+    {
+      title: 'Resources',
+      links: [
+        { text: 'Plein Air Hub', href: getPermalink('/plein-air-hub') },
+        { text: 'About', href: getPermalink('/about') },
+      ],
+    },
+    {
+      title: 'Development',
+      links: [
+        { text: 'Changelog', href: getPermalink('/changelog') },
+        { text: 'GitHub', href: 'https://github.com/sketch-nomad', target: '_blank' },
+      ],
+    },
+    {
+      title: 'Content',
+      links: [
+        { text: 'Blog', href: getBlogPermalink() },
+        { text: 'Contact', href: getPermalink('/contact') },
+      ],
+    },
+    {
+      title: 'Platform',
+      links: [
+        { text: 'Launch App', href: 'https://sketchnomad.app', target: '_blank' },
+      ],
+    },
+  ],
+  secondaryLinks: [
+    { text: 'Terms', href: getPermalink('/terms') },
+    { text: 'Privacy Policy', href: getPermalink('/privacy') },
+  ],
+  socialLinks: [
+    { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/sketch.nomad/' },
+    { ariaLabel: 'GitHub', icon: 'tabler:brand-github', href: 'https://github.com/sketch-nomad' },
+    { ariaLabel: 'LinkedIn', icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/company/sketch-nomad/' },
+    { ariaLabel: 'YouTube', icon: 'tabler:brand-youtube', href: 'https://www.youtube.com/@sketch-nomad' },
+    { ariaLabel: 'Pinterest', icon: 'tabler:brand-pinterest', href: 'https://www.pinterest.com/sketchnomad' },
+  ],
+  footNote: `
+    © 2026 Sketch Nomad · Contact: <a class="text-primary underline" href="mailto:info@sketchnomad.com">info@sketchnomad.com</a> · All rights reserved.
+  `,
+};

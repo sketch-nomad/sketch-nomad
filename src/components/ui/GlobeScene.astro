@@ -1,0 +1,597 @@
+---
+import { getImage } from 'astro:assets';
+import Image from '~/components/common/Image.astro';
+import { findImage } from '~/utils/images';
+import type { ImageMetadata } from 'astro';
+import type { GlobePainting } from '~/data/globe-paintings';
+import earthUrl from '~/assets/images/earth.webp?url';
+
+interface Props {
+  paintings: GlobePainting[];
+}
+
+const { paintings } = Astro.props;
+
+// The static poster shows the first two works at fixed spots on the lit sphere.
+const poster = paintings.slice(0, 2);
+const spots = [
+  { left: '34%', top: '27%' },
+  { left: '64%', top: '56%' },
+];
+
+// Every painting becomes a pin at its real coordinates, placed in the browser from this list.
+const markers = await Promise.all(
+  paintings.map(async ({ src, alt, label, artist, lngLat, focus }) => {
+    const image = (await findImage(src)) as ImageMetadata;
+    const thumb = await getImage({ src: image, width: 208, format: 'webp' });
+    return { src: thumb.src, alt, label, artist, lng: lngLat[0], lat: lngLat[1], focus };
+  })
+);
+---
+
+<div
+  class="globe-scene"
+  role="group"
+  aria-label="Famous paintings pinned to the places they show, around the world"
+  data-texture={earthUrl}
+  data-markers={JSON.stringify(markers)}
+>
+  <div class="globe-map" aria-hidden="true"></div>
+  <p class="globe-hint" aria-hidden="true"></p>
+  <div class="globe">
+    <div class="globe__shade" aria-hidden="true"></div>
+
+    {
+      poster.map((painting, i) => (
+        <figure class="pin" style={`left:${spots[i].left};top:${spots[i].top};--i:${i}`}>
+          <div class="pin__photo">
+            <Image
+              src={painting.src}
+              alt={painting.alt}
+              width={208}
+              widths={[104, 208, 416]}
+              sizes="(min-width: 1024px) 104px, 76px"
+              layout="responsive"
+              format="webp"
+              loading="eager"
+              decoding="async"
+              class="block h-full w-full object-cover"
+            />
+          </div>
+          <span class="pin__tip" aria-hidden="true" />
+          <span class="pin__dot" aria-hidden="true" />
+          <figcaption class="pin__label">
+            <span class="pin__place">{painting.label}</span>
+            <span class="pin__artist">{painting.artist}</span>
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</div>
+
+<noscript
+  ><style>
+    .globe-scene .globe {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+  </style></noscript
+>
+
+<!-- Global: the live markers are created in the browser, so scoped styles would not reach them. -->
+<style is:global>
+  .globe-scene {
+    position: relative;
+    height: 29rem;
+    margin-top: 1rem;
+    overflow: hidden;
+  }
+  .globe-scene .globe {
+    position: absolute;
+    pointer-events: none;
+    left: 50%;
+    top: 2.5rem;
+    width: 33rem;
+    height: 33rem;
+    translate: -50% 0;
+    border-radius: 9999px;
+    background: radial-gradient(
+      circle at 36% 30%,
+      rgb(var(--globe-light)) 0%,
+      #d3e5da 34%,
+      rgb(var(--globe-mid)) 70%,
+      rgb(var(--globe-dark)) 100%
+    );
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.06),
+      0 0 110px 8px rgb(110 200 170 / 0.22);
+  }
+  .globe-scene .globe__shade {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at 30% 26%, transparent 38%, rgb(8 30 22 / 0.55) 100%);
+    pointer-events: none;
+  }
+
+  /* The live globe fades in over the poster once it is ready. */
+  .globe-scene .globe-map {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 900ms ease-out;
+  }
+  .globe-scene.is-live .globe-map {
+    opacity: 1;
+  }
+  .globe-map {
+    touch-action: pan-y;
+    cursor: grab;
+  }
+  .globe-map.is-grabbing {
+    cursor: grabbing;
+  }
+  .globe-map canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .globe-scene.is-live .globe {
+    opacity: 0;
+    transition: opacity 900ms ease-out;
+  }
+  /* The static poster is only a fallback (WebGL unavailable or no JavaScript). While the live globe loads,
+     show nothing but the dark background so there is no poster-to-globe jump. */
+  .globe-scene:not(.is-fallback) .globe {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .globe-scene .pin {
+    position: absolute;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    translate: -50% -100%;
+    transform-origin: 50% 100%;
+  }
+  .globe-scene .pin__photo {
+    width: 4.75rem;
+    height: 3.75rem;
+    overflow: hidden;
+    border: 3px solid #fff;
+    border-radius: 0.875rem;
+    background: #fff;
+    box-shadow: 0 10px 24px rgb(0 0 0 / 0.4);
+  }
+  .globe-scene .pin__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .globe-scene .pin__tip {
+    width: 0;
+    height: 0;
+    border: 9px solid transparent;
+    border-top: 12px solid #fff;
+    margin-top: -2px;
+  }
+  .globe-scene .pin__dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 9999px;
+    background: rgb(var(--mint));
+    border: 3px solid #fff;
+    margin-top: -2px;
+    box-shadow: 0 0 0 7px rgb(16 185 129 / 0.3);
+  }
+  .globe-scene .pin__label {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    white-space: nowrap;
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 0.95);
+    color: rgb(23 23 26);
+    display: grid;
+    justify-items: center;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    box-shadow: 0 6px 16px rgb(0 0 0 / 0.3);
+  }
+  .globe-scene .pin__place {
+    font-weight: 700;
+  }
+  .globe-scene .pin__artist {
+    font-size: 0.68rem;
+    opacity: 0.75;
+  }
+
+  /* Live pins: the script positions them with a transform, so drop the poster's own placement. */
+  .globe-map .pin {
+    position: absolute;
+    left: 0;
+    top: 0;
+    translate: none;
+    animation: none;
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  /* A small cue that the live globe can be dragged; it goes after the first drag. */
+  .globe-scene .globe-hint {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 3.25rem;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+    border-radius: 9999px;
+    background: rgb(7 9 12 / 0.78);
+    color: #fff;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition: opacity 600ms ease-out 800ms;
+  }
+  .globe-scene.is-live:not(.is-touched) .globe-hint {
+    opacity: 1;
+  }
+  .globe-map .pin__photo {
+    width: 3.9rem;
+    height: 3.1rem;
+  }
+  .globe-map .pin {
+    transition: opacity 250ms ease-out;
+  }
+  .globe-map .pin.pin--edge {
+    opacity: 0;
+  }
+  .globe-map .pin__photo {
+    width: 3.1rem;
+    height: 2.5rem;
+    border-width: 2px;
+    border-radius: 0.6rem;
+  }
+  .globe-map .pin__label {
+    font-size: 0.62rem;
+    padding: 0.2rem 0.5rem;
+    top: calc(100% + 0.35rem);
+  }
+  /* On phones the marker is a thumbnail and its place, the artist is in the alt text. */
+  .globe-map .pin__artist {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .globe-scene {
+      position: absolute;
+      inset: 0;
+      height: auto;
+      margin: 0;
+      overflow: visible;
+    }
+    .globe-scene .globe-map {
+      left: 50%;
+      width: 100vw;
+      translate: -50% 0;
+    }
+    .globe-scene .globe {
+      left: auto;
+      right: -14vw;
+      top: 50%;
+      width: min(66vw, 58rem);
+      height: min(66vw, 58rem);
+      translate: 0 -46%;
+    }
+    .globe-scene .pin__photo {
+      width: 6.5rem;
+      height: 5.25rem;
+    }
+    .globe-scene .pin__label {
+      font-size: 0.8rem;
+    }
+    .globe-map .pin__photo {
+      width: 5rem;
+      height: 4rem;
+      border-width: 3px;
+      border-radius: 0.875rem;
+    }
+    .globe-map .pin__label {
+      font-size: 0.72rem;
+      padding: 0.25rem 0.6rem;
+      top: calc(100% + 0.5rem);
+    }
+    .globe-map .pin__artist {
+      display: block;
+      font-size: 0.62rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .globe-scene .globe .pin {
+      animation: globe-pin-drop 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: calc(250ms + var(--i) * 130ms);
+    }
+  }
+  @keyframes globe-pin-drop {
+    from {
+      opacity: 0;
+      transform: translateY(-14px) scale(0.92);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  // A small WebGL globe: one textured sphere drawn in a fragment shader, pins placed by projecting
+  // their coordinates. It starts when the browser is idle after load; if WebGL fails the poster stays.
+  interface Marker {
+    src: string;
+    alt: string;
+    label: string;
+    artist: string;
+    lng: number;
+    lat: number;
+    focus?: string;
+  }
+
+  const scene = document.querySelector<HTMLElement>('.globe-scene');
+  if (scene) {
+    const run = () =>
+      initGlobe(scene).catch((error) => {
+        console.warn('Globe unavailable, keeping the poster:', error);
+        scene.classList.add('is-fallback');
+      });
+    const idle = () =>
+      'requestIdleCallback' in window ? requestIdleCallback(run, { timeout: 2000 }) : setTimeout(run, 200);
+    if (document.readyState === 'complete') idle();
+    else addEventListener('load', idle, { once: true });
+  }
+
+  function pinElement({ src, alt, label, artist, focus }: Marker) {
+    const el = document.createElement('figure');
+    el.className = 'pin';
+    el.setAttribute('aria-hidden', 'true');
+    const photo = document.createElement('div');
+    photo.className = 'pin__photo';
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = alt;
+    img.decoding = 'async';
+    if (focus) img.style.objectPosition = focus;
+    photo.appendChild(img);
+    const tip = document.createElement('span');
+    tip.className = 'pin__tip';
+    const dot = document.createElement('span');
+    dot.className = 'pin__dot';
+    const caption = document.createElement('figcaption');
+    caption.className = 'pin__label';
+    const place = document.createElement('span');
+    place.className = 'pin__place';
+    place.textContent = label;
+    const by = document.createElement('span');
+    by.className = 'pin__artist';
+    by.textContent = artist;
+    caption.append(place, by);
+    el.append(photo, tip, dot, caption);
+    return el;
+  }
+
+  const VERT = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
+  // Orthographic sphere: rotate each pixel's surface normal to world space, look up longitude/latitude in the texture.
+  const FRAG = `precision highp float;
+uniform vec2 uRes;uniform vec2 uC;uniform float uR;uniform vec2 uRot;uniform sampler2D uTex;
+void main(){
+  vec2 p=vec2(gl_FragCoord.x-uC.x,uC.y-(uRes.y-gl_FragCoord.y))/uR;
+  float r=length(p);
+  float sa=clamp((1.0-r)/(1.5/uR),0.0,1.0);
+  float ga=0.3*exp(-max(r-1.0,0.0)*9.0);
+  vec3 glow=vec3(0.43,0.78,0.67);
+  vec3 col=vec3(0.0);
+  if(sa>0.0){
+    float z=sqrt(max(1.0-r*r,0.0));
+    vec3 n=vec3(p,z);
+    float cp=cos(uRot.y),sp=sin(uRot.y),cl=cos(uRot.x),sl=sin(uRot.x);
+    float y1=n.y*cp+n.z*sp,z1=-n.y*sp+n.z*cp;
+    float wx=n.x*cl+z1*sl,wz=-n.x*sl+z1*cl;
+    vec2 uv=vec2(atan(wx,wz)/6.2831853+0.5,0.5-asin(clamp(y1,-1.0,1.0))/3.1415927);
+    col=texture2D(uTex,uv).rgb;
+    float lit=dot(n,normalize(vec3(-0.45,0.5,0.75)));
+    col*=mix(0.55,1.08,smoothstep(-0.3,0.85,lit));
+    col+=glow*pow(1.0-z,3.0)*0.35;
+  }
+  float a=sa+ga*(1.0-sa);
+  gl_FragColor=vec4(col*sa+glow*ga*(1.0-sa),a);
+}`;
+
+  // Yield between the heavy steps (shader compile, texture upload, first draw) so none becomes one long task.
+  const yieldToMain = () => new Promise<void>((resolve) => setTimeout(resolve));
+
+  async function initGlobe(scene: HTMLElement) {
+    const container = scene.querySelector<HTMLElement>('.globe-map')!;
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: true, antialias: false });
+    if (!gl) throw new Error('WebGL unavailable');
+
+    const compile = (type: number, src: string) => {
+      const sh = gl.createShader(type)!;
+      gl.shaderSource(sh, src);
+      gl.compileShader(sh);
+      if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(sh) ?? 'shader error');
+      return sh;
+    };
+    const prog = gl.createProgram()!;
+    gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
+    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error('program link failed');
+    await yieldToMain();
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, 'a');
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    const u = (name: string) => gl.getUniformLocation(prog, name);
+
+    const img = new Image();
+    img.src = scene.dataset.texture!;
+    await img.decode();
+    await yieldToMain();
+    const tex = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    container.prepend(canvas);
+    await yieldToMain();
+
+    const markers: Marker[] = JSON.parse(scene.dataset.markers ?? '[]');
+    const pins = markers.map((m) => {
+      const el = pinElement(m);
+      container.appendChild(el);
+      return { el, lng: (m.lng * Math.PI) / 180, lat: (m.lat * Math.PI) / 180, w: 0, up: 0, down: 0 };
+    });
+
+    // Same framing as the poster: big and bleeding off the right on desktop, centred below the panel on phones.
+    let W = 0,
+      H = 0,
+      cx = 0,
+      cy = 0,
+      R = 0,
+      dpr = 1;
+    let lon = (45 * Math.PI) / 180;
+    let lat = (30 * Math.PI) / 180;
+    const layout = () => {
+      W = container.clientWidth;
+      H = container.clientHeight;
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      if (matchMedia('(min-width: 1024px)').matches) {
+        R = Math.min(0.62 * W, 900) / 2;
+        cx = 0.74 * W;
+        cy = H / 2;
+      } else {
+        R = Math.min(528, W * 1.35) / 2;
+        cx = W / 2;
+        cy = 40 + R;
+      }
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      top = matchMedia('(min-width: 1024px)').matches ? 88 : EDGE;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      // Pin sizes change with the breakpoint; measure them for the edge test.
+      pins.forEach((p) => {
+        const label = p.el.querySelector<HTMLElement>('.pin__label')!;
+        p.w = Math.max(p.el.offsetWidth, label.offsetWidth);
+        p.up = p.el.offsetHeight;
+        p.down = label.offsetHeight + 8;
+      });
+    };
+
+    const EDGE = 12;
+    // On desktop the floating header covers the top 5.25rem, so a pin under it counts as clipped.
+    let top = EDGE;
+    const draw = () => {
+      gl.uniform2f(u('uRes'), canvas.width, canvas.height);
+      gl.uniform2f(u('uC'), cx * dpr, cy * dpr);
+      gl.uniform1f(u('uR'), R * dpr);
+      gl.uniform2f(u('uRot'), lon, lat);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+      const cl = Math.cos(lon),
+        sl = Math.sin(lon),
+        cp = Math.cos(lat),
+        sp = Math.sin(lat);
+      pins.forEach((p) => {
+        // World vector -> view space (the inverse of the shader's rotation).
+        const wx = Math.cos(p.lat) * Math.sin(p.lng),
+          wy = Math.sin(p.lat),
+          wz = Math.cos(p.lat) * Math.cos(p.lng);
+        const x1 = wx * cl - wz * sl;
+        const z1 = wx * sl + wz * cl;
+        const y = wy * cp - z1 * sp;
+        const z = wy * sp + z1 * cp;
+        const sx = cx + x1 * R;
+        const sy = cy - y * R;
+        // Hidden on the far side, and while any part of the pin would be cut by the edge of the scene.
+        const hidden =
+          z < 0.12 || sx - p.w / 2 < EDGE || sx + p.w / 2 > W - EDGE || sy - p.up < top || sy + p.down > H - EDGE;
+        p.el.classList.toggle('pin--edge', hidden);
+        p.el.style.transform = `translate(${sx.toFixed(1)}px,${sy.toFixed(1)}px) translate(-50%,-100%)`;
+      });
+    };
+
+    // Render only while moving: drag, then a short glide.
+    let raf = 0,
+      vx = 0,
+      vy = 0,
+      dragging = false;
+    const tick = () => {
+      raf = 0;
+      if (!dragging) {
+        lon += vx;
+        lat = Math.max(-1.3, Math.min(1.3, lat + vy));
+        vx *= 0.93;
+        vy *= 0.93;
+      }
+      draw();
+      if (dragging || Math.hypot(vx, vy) > 1e-4) raf = requestAnimationFrame(tick);
+    };
+    const kick = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+
+    let last = { x: 0, y: 0 };
+    container.addEventListener('pointerdown', (e) => {
+      const r = container.getBoundingClientRect();
+      if (Math.hypot(e.clientX - r.left - cx, e.clientY - r.top - cy) > R * 1.02) return;
+      dragging = true;
+      last = { x: e.clientX, y: e.clientY };
+      vx = vy = 0;
+      container.setPointerCapture(e.pointerId);
+      container.classList.add('is-grabbing');
+      scene.classList.add('is-touched');
+    });
+    container.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      vx = -(e.clientX - last.x) / R;
+      vy = (e.clientY - last.y) / R;
+      lon += vx;
+      lat = Math.max(-1.3, Math.min(1.3, lat + vy));
+      last = { x: e.clientX, y: e.clientY };
+      kick();
+    });
+    const release = () => {
+      dragging = false;
+      container.classList.remove('is-grabbing');
+      kick();
+    };
+    container.addEventListener('pointerup', release);
+    container.addEventListener('pointercancel', release);
+
+    const hint = scene.querySelector<HTMLElement>('.globe-hint');
+    if (hint) hint.textContent = 'Drag to turn the globe';
+
+    let resizeTimer: number | undefined;
+    addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        layout();
+        draw();
+      }, 150);
+    });
+
+    layout();
+    draw();
+    requestAnimationFrame(() => scene.classList.add('is-live'));
+  }
+</script>

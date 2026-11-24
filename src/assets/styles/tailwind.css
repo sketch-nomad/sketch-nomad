@@ -1,0 +1,258 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* Pill controls, as in the app. The primary one is the single emerald action. */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full bg-heading/10 font-heading font-bold text-center text-base text-heading leading-snug py-3.5 px-6 md:px-7 cursor-pointer;
+    transition:
+      transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 160ms ease-out,
+      box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+    background-color: rgb(var(--aw-color-text-heading) / 0.16);
+  }
+  .btn:active {
+    transform: translateY(0);
+  }
+  .btn:focus-visible {
+    outline: 3px solid rgb(var(--mint));
+    outline-offset: 3px;
+  }
+
+  .btn-primary {
+    @apply btn bg-action text-action-fg;
+    box-shadow: 0 8px 18px -8px rgb(var(--action-bg) / 0.7);
+  }
+  .btn-primary:hover {
+    background-color: rgb(var(--action-bg));
+    filter: brightness(1.08);
+    box-shadow: 0 12px 22px -8px rgb(var(--action-bg) / 0.75);
+  }
+
+  .btn-secondary {
+    @apply btn;
+  }
+
+  .btn-tertiary {
+    @apply btn bg-transparent text-muted font-semibold hover:text-primary;
+  }
+  .btn-tertiary:hover {
+    transform: none;
+    background-color: transparent;
+  }
+
+  /* Frosted panel over the map, the app's side panel. */
+  .glass-panel {
+    background: var(--glass-bg);
+    color: rgb(var(--glass-fg));
+    border-radius: 1.75rem;
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.5) inset,
+      0 30px 60px -24px rgb(0 0 0 / 0.65);
+  }
+
+  /* A list panel on the page ground: rounded, hairline-separated rows like the app sidebar. */
+  .list-panel {
+    background: rgb(var(--aw-color-surface));
+    border-radius: 1.75rem;
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.06),
+      0 18px 36px -24px rgb(0 0 0 / 0.25);
+  }
+
+  .starfield {
+    background-image:
+      radial-gradient(1.7px 1.7px at 32.7% 15.8%, #fff, transparent),
+      radial-gradient(1px 1px at 8.1% 53.5%, #fff, transparent),
+      radial-gradient(1px 1px at 90.2% 22%, #b9c6bf, transparent),
+      radial-gradient(1.4px 1.4px at 42% 24.6%, #b9c6bf, transparent),
+      radial-gradient(1px 1px at 6.8% 56.4%, #fff, transparent),
+      radial-gradient(1px 1px at 57.6% 39.9%, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 55.6% 14.1%, #fff, transparent),
+      radial-gradient(1.4px 1.4px at 54% 56.9%, #fff, transparent),
+      radial-gradient(1px 1px at 11.1% 57%, #dfe7e3, transparent),
+      radial-gradient(1.4px 1.4px at 10.5% 70.8%, #fff, transparent),
+      radial-gradient(1.4px 1.4px at 61.7% 49.6%, #b9c6bf, transparent),
+      radial-gradient(1.2px 1.2px at 77.2% 46.6%, #dfe7e3, transparent),
+      radial-gradient(1.7px 1.7px at 30.4% 78.8%, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 9% 30.4%, #dfe7e3, transparent),
+      radial-gradient(1px 1px at 72.5% 29.2%, #fff, transparent),
+      radial-gradient(1px 1px at 51.2% 17.2%, #fff, transparent),
+      radial-gradient(1.7px 1.7px at 92.5% 42.3%, #fff, transparent),
+      radial-gradient(1px 1px at 75.9% 57.2%, #dfe7e3, transparent),
+      radial-gradient(1.4px 1.4px at 69.1% 59.2%, #b9c6bf, transparent),
+      radial-gradient(1px 1px at 7.7% 10.2%, #b9c6bf, transparent),
+      radial-gradient(1.7px 1.7px at 69.3% 7.4%, #dfe7e3, transparent),
+      radial-gradient(1.2px 1.2px at 64.4% 98.3%, #dfe7e3, transparent),
+      radial-gradient(1px 1px at 71.2% 87.9%, #fff, transparent),
+      radial-gradient(1.4px 1.4px at 93.2% 35.8%, #fff, transparent),
+      radial-gradient(1px 1px at 49.4% 22.4%, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 73.4% 40%, #fff, transparent),
+      radial-gradient(1px 1px at 17.3% 40.4%, #fff, transparent),
+      radial-gradient(1px 1px at 81.3% 85.7%, #b9c6bf, transparent),
+      radial-gradient(1.2px 1.2px at 97.7% 67.9%, #fff, transparent),
+      radial-gradient(1px 1px at 15.8% 18.3%, #fff, transparent),
+      radial-gradient(1px 1px at 2.2% 82.4%, #dfe7e3, transparent),
+      radial-gradient(1.4px 1.4px at 28.6% 15.3%, #dfe7e3, transparent),
+      radial-gradient(1px 1px at 60.8% 32.2%, #fff, transparent),
+      radial-gradient(1.7px 1.7px at 45.8% 86.4%, #b9c6bf, transparent),
+      radial-gradient(1.2px 1.2px at 40% 39.6%, #b9c6bf, transparent),
+      radial-gradient(1px 1px at 7.1% 7.6%, #b9c6bf, transparent),
+      radial-gradient(1px 1px at 16.9% 34.3%, #fff, transparent),
+      radial-gradient(1px 1px at 1% 15.8%, #dfe7e3, transparent),
+      radial-gradient(1px 1px at 61.1% 7.9%, #b9c6bf, transparent),
+      radial-gradient(1px 1px at 15.6% 25.7%, #dfe7e3, transparent),
+      radial-gradient(1.2px 1.2px at 47.5% 12.3%, #b9c6bf, transparent),
+      radial-gradient(1px 1px at 48.1% 31.6%, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 74.5% 73.6%, #fff, transparent),
+      radial-gradient(1.4px 1.4px at 51.6% 21.1%, #dfe7e3, transparent),
+      radial-gradient(1px 1px at 15.4% 54.2%, #dfe7e3, transparent),
+      radial-gradient(1.7px 1.7px at 96.9% 85.6%, #dfe7e3, transparent),
+      radial-gradient(1px 1px at 51.8% 90%, #fff, transparent),
+      radial-gradient(1px 1px at 53.2% 77.3%, #fff, transparent),
+      radial-gradient(1px 1px at 61.1% 78.3%, #fff, transparent),
+      radial-gradient(1px 1px at 81.2% 73.5%, #fff, transparent),
+      radial-gradient(1px 1px at 51.7% 35.8%, #fff, transparent),
+      radial-gradient(1px 1px at 78.4% 47.3%, #dfe7e3, transparent),
+      radial-gradient(1px 1px at 44.8% 92.8%, #dfe7e3, transparent),
+      radial-gradient(1.2px 1.2px at 8.9% 11%, #fff, transparent),
+      radial-gradient(1.4px 1.4px at 34.1% 48.3%, #fff, transparent),
+      radial-gradient(1.7px 1.7px at 48% 65%, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 82.8% 12.8%, #fff, transparent),
+      radial-gradient(1.7px 1.7px at 47.8% 18.5%, #dfe7e3, transparent),
+      radial-gradient(1.7px 1.7px at 9.5% 93.7%, #b9c6bf, transparent),
+      radial-gradient(1px 1px at 46.4% 73.8%, #fff, transparent),
+      radial-gradient(1px 1px at 17.7% 13.4%, #b9c6bf, transparent),
+      radial-gradient(1.4px 1.4px at 80% 15.3%, #b9c6bf, transparent),
+      radial-gradient(1.4px 1.4px at 65.4% 35.3%, #fff, transparent),
+      radial-gradient(1.7px 1.7px at 3.1% 79.3%, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 52.6% 92.5%, #fff, transparent),
+      radial-gradient(1px 1px at 82% 21.7%, #fff, transparent),
+      radial-gradient(1.4px 1.4px at 29.7% 24.6%, #dfe7e3, transparent),
+      radial-gradient(1px 1px at 26.4% 42.1%, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 90.2% 35.7%, #b9c6bf, transparent),
+      radial-gradient(1px 1px at 82.1% 87.1%, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 52.3% 2.8%, #fff, transparent),
+      radial-gradient(1px 1px at 60.6% 77.1%, #fff, transparent),
+      radial-gradient(1px 1px at 14.9% 61.7%, #fff, transparent),
+      radial-gradient(1.4px 1.4px at 32.9% 51.8%, #b9c6bf, transparent),
+      radial-gradient(1.4px 1.4px at 77.9% 11.4%, #fff, transparent),
+      radial-gradient(1px 1px at 25.4% 28.1%, #b9c6bf, transparent),
+      radial-gradient(1px 1px at 56% 75.5%, #b9c6bf, transparent),
+      radial-gradient(1.4px 1.4px at 32.9% 96.4%, #fff, transparent),
+      radial-gradient(1.4px 1.4px at 68.9% 45.3%, #b9c6bf, transparent),
+      radial-gradient(1.4px 1.4px at 50.8% 25.3%, #dfe7e3, transparent),
+      radial-gradient(1px 1px at 91.4% 88.5%, #b9c6bf, transparent),
+      radial-gradient(1.2px 1.2px at 14.4% 12.9%, #dfe7e3, transparent),
+      radial-gradient(1px 1px at 8.1% 24.6%, #fff, transparent),
+      radial-gradient(1px 1px at 66.6% 77.8%, #dfe7e3, transparent),
+      radial-gradient(1.2px 1.2px at 15% 87.5%, #fff, transparent),
+      radial-gradient(1.2px 1.2px at 74.2% 10.2%, #fff, transparent),
+      radial-gradient(1px 1px at 98% 82.6%, #b9c6bf, transparent),
+      radial-gradient(1.2px 1.2px at 98.4% 40.6%, #fff, transparent),
+      radial-gradient(1px 1px at 35.9% 10%, #fff, transparent),
+      radial-gradient(1.7px 1.7px at 34.1% 45.9%, #fff, transparent);
+  }
+}
+
+/* Browser surfaces drawn from the palette */
+html {
+  scrollbar-color: rgb(var(--globe-dark)) rgb(var(--aw-color-bg-page));
+}
+:focus-visible {
+  outline: 3px solid rgb(var(--aw-color-primary));
+  outline-offset: 3px;
+}
+a {
+  text-underline-offset: 0.2em;
+}
+
+#header.scroll > div:first-child {
+  @apply bg-page/95 border-b border-edge;
+  backdrop-filter: blur(10px);
+}
+.dark #header.scroll > div:first-child,
+#header.scroll.dark > div:first-child {
+  @apply bg-page/95 border-b border-edge;
+}
+
+/* Over the dark hero the header sits on the starfield until the page scrolls (desktop only: on phones the header is its own bar). */
+@media (min-width: 768px) {
+  #header.on-dark:not(.scroll) {
+    color: #fff;
+  }
+  #header.on-dark:not(.scroll) .text-default,
+  #header.on-dark:not(.scroll) .logo-text {
+    color: #fff;
+  }
+  #header.on-dark:not(.scroll) .logo-mark {
+    filter: invert(1);
+  }
+  #header.on-dark:not(.scroll) .nav-pill {
+    background: rgb(255 255 255 / 0.12);
+    border-color: rgb(255 255 255 / 0.2);
+  }
+  #header.on-dark:not(.scroll) .aw-link-active {
+    background: #fff;
+    color: rgb(23 23 26);
+  }
+  /* The theme toggle sits over the globe: give it a chip so it stays visible. */
+  #header.on-dark:not(.scroll) [data-aw-toggle-color-scheme] {
+    background: rgb(7 9 12 / 0.72);
+    border: 1px solid rgb(255 255 255 / 0.25);
+    border-radius: 9999px;
+    color: #fff;
+  }
+}
+/* #header.scroll > div:last-child {
+  @apply py-3;
+} */
+
+#header.expanded nav {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  bottom: 70px !important;
+  padding: 0 5px;
+}
+
+.aw-link-active {
+  background: rgb(var(--aw-color-text-heading));
+  color: rgb(var(--aw-color-bg-page));
+}
+
+.dropdown:focus .dropdown-menu,
+.dropdown:focus-within .dropdown-menu,
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+[astro-icon].icon-light > * {
+  stroke-width: 1.2;
+}
+
+[astro-icon].icon-bold > * {
+  stroke-width: 2.4;
+}
+
+[data-aw-toggle-menu] path {
+  @apply transition;
+}
+[data-aw-toggle-menu].expanded g > path:first-child {
+  @apply -rotate-45 translate-y-[15px] translate-x-[-3px];
+}
+
+[data-aw-toggle-menu].expanded g > path:last-child {
+  @apply rotate-45 translate-y-[-8px] translate-x-[14px];
+}
+
+/* To deprecated */
+
+.dd *:first-child {
+  margin-top: 0;
+}

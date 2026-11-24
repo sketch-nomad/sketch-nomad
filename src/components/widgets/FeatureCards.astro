@@ -1,0 +1,71 @@
+---
+import { Icon } from 'astro-icon/components';
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import Button from '~/components/ui/Button.astro';
+import type { CallToAction, Widget } from '~/types';
+
+export interface FeatureCard {
+  category: string;
+  title: string;
+  description: string;
+  icon: string;
+  status?: 'live' | 'soon';
+  callToAction?: CallToAction;
+}
+
+export interface Props extends Widget {
+  title?: string;
+  subtitle?: string;
+  tagline?: string;
+  items?: FeatureCard[];
+}
+
+const {
+  title = await Astro.slots.render('title'),
+  subtitle = await Astro.slots.render('subtitle'),
+  items = [],
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={classes?.container as string} bg={bg}>
+  <Headline title={title} subtitle={subtitle} classes={classes?.headline as Record<string, string>} />
+
+  <ul class="list-none m-0 p-0 grid gap-4 md:grid-cols-2 md:gap-5">
+    {
+      items.map(({ category, title: itemTitle, description, icon, status = 'live', callToAction }) => (
+        <li
+          class:list={[
+            'list-panel flex flex-col gap-3 p-5 sm:p-6',
+            status === 'soon' && 'md:col-span-2 md:flex-row md:items-center md:gap-6',
+          ]}
+        >
+          <div class="flex items-center gap-3">
+            <div
+              class="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-primary/10 text-primary"
+              aria-hidden="true"
+            >
+              <Icon name={icon} class="icon-light h-6 w-6" />
+            </div>
+            <span class="text-xs font-bold uppercase tracking-wider text-secondary">
+              {status === 'soon' ? 'Coming soon' : category}
+            </span>
+          </div>
+
+          <div class="md:flex-1">
+            <h3 class="text-lg font-bold leading-tight text-heading md:text-xl">{itemTitle}</h3>
+            <p class="mt-1.5 text-base leading-snug text-muted">{description}</p>
+          </div>
+
+          {callToAction && (
+            <Button variant="link" {...callToAction} class="p-0 text-sm font-bold underline md:shrink-0" />
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</WidgetWrapper>

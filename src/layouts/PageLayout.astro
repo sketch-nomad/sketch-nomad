@@ -1,0 +1,40 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import Header from '~/components/widgets/Header.astro';
+import Footer from '~/components/widgets/Footer.astro';
+
+import { headerData, footerData } from '~/navigation';
+
+import type { MetaData } from '~/types';
+import type { Props as StructuredDataProps } from '~/components/common/StructuredData.astro';
+
+export interface Props {
+  metadata?: MetaData;
+  structuredData?: Array<StructuredDataProps>;
+  breadcrumbs?: Array<{ name: string; url: string }>;
+  /** The page opens on the dark starfield hero: the header sits on it until the page scrolls. */
+  darkHero?: boolean;
+}
+
+const { metadata, structuredData = [], breadcrumbs, darkHero = false } = Astro.props;
+
+const allStructuredData = [...structuredData];
+if (breadcrumbs?.length) {
+  allStructuredData.push({
+    type: 'BreadcrumbList',
+    data: { items: breadcrumbs },
+  });
+}
+---
+
+<Layout metadata={metadata} structuredData={allStructuredData}>
+  <slot name="header">
+    <Header {...headerData} isSticky showToggleTheme position="left" onDark={darkHero} />
+  </slot>
+  <main>
+    <slot />
+  </main>
+  <slot name="footer">
+    <Footer {...footerData} />
+  </slot>
+</Layout>
